@@ -7,5 +7,5 @@ rem
 setlocal
 set srclib=imglib
 call godir (cog)source/%srclib%
-rem call build_jpeg_lib
+call build_jpeg_lib
 call build_img_lib
