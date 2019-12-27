@@ -1,7 +1,7 @@
 module img_parms;
 define img_parms_read;
 define img_parms_skip;
-%include '/cognivision_links/dsee_libs/img/img2.ins.pas';
+%include 'img2.ins.pas';
 {
 *****************************************************************
 *

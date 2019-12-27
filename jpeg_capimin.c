@@ -32,7 +32,7 @@ jpeg_CreateCompress (j_compress_ptr cinfo, int version, size_t structsize)
   int i;
 
   /* Guard against version mismatches between library and caller. */
-  cinfo->mem = NULL;              /* so jpeg_destroy knows mem mgr not called */
+  cinfo->mem = NULL;                   /* so jpeg_destroy knows mem mgr not called */
   if (version != JPEG_LIB_VERSION)
     ERREXIT2(cinfo, JERR_BAD_LIB_VERSION, JPEG_LIB_VERSION, version);
   if (structsize != SIZEOF(struct jpeg_compress_struct))
@@ -73,7 +73,7 @@ jpeg_CreateCompress (j_compress_ptr cinfo, int version, size_t structsize)
 
   cinfo->script_space = NULL;
 
-  cinfo->input_gamma = 1.0;       /* in case application forgets */
+  cinfo->input_gamma = 1.0;            /* in case application forgets */
 
   /* OK, I'm ready */
   cinfo->global_state = CSTATE_START;
@@ -87,7 +87,7 @@ jpeg_CreateCompress (j_compress_ptr cinfo, int version, size_t structsize)
 GLOBAL(void)
 jpeg_destroy_compress (j_compress_ptr cinfo)
 {
-  jpeg_destroy((j_common_ptr) cinfo); /* use common routine */
+  jpeg_destroy((j_common_ptr) cinfo);  /* use common routine */
 }
 
 
@@ -99,7 +99,7 @@ jpeg_destroy_compress (j_compress_ptr cinfo)
 GLOBAL(void)
 jpeg_abort_compress (j_compress_ptr cinfo)
 {
-  jpeg_abort((j_common_ptr) cinfo); /* use common routine */
+  jpeg_abort((j_common_ptr) cinfo);    /* use common routine */
 }
 
 

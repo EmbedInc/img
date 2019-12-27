@@ -6,7 +6,7 @@
 }
 module img_conn_fmt;
 define img_conn_fmt;
-%include '/cognivision_links/dsee_libs/img/img2.ins.pas';
+%include 'img2.ins.pas';
 
 procedure img_conn_fmt (               {make format string with resolution values}
   in      img: img_conn_t;             {image stream connection handle}

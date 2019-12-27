@@ -3,7 +3,7 @@
 module img_driver_tga;
 define img_d_tga_open_read;
 define img_d_tga_open_write;
-%include '/cognivision_links/dsee_libs/img/img2.ins.pas';
+%include 'img2.ins.pas';
 
 const
   inbuf_size = 4096;                   {size of chunk to read at one time}

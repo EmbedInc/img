@@ -13,7 +13,7 @@
 #include "jpeglib.h"
 
 
-typedef enum {                    /* JPEG marker codes */
+typedef enum {                         /* JPEG marker codes */
   M_SOF0  = 0xc0,
   M_SOF1  = 0xc1,
   M_SOF2  = 0xc2,
@@ -84,9 +84,9 @@ typedef enum {                    /* JPEG marker codes */
 /* Private state */
 
 typedef struct {
-  struct jpeg_marker_writer pub;  /* public fields */
+  struct jpeg_marker_writer pub;       /* public fields */
 
-  unsigned int last_restart_interval; /* last DRI value emitted; 0 after SOI */
+  unsigned int last_restart_interval;  /* last DRI value emitted; 0 after SOI */
 } my_marker_writer;
 
 typedef my_marker_writer * my_marker_ptr;
@@ -189,7 +189,7 @@ emit_dht (j_compress_ptr cinfo, int index, boolean is_ac)
 
   if (is_ac) {
     htbl = cinfo->ac_huff_tbl_ptrs[index];
-    index += 0x10;                /* output index has AC bit set */
+    index += 0x10;                     /* output index has AC bit set */
   } else {
     htbl = cinfo->dc_huff_tbl_ptrs[index];
   }
@@ -257,7 +257,7 @@ emit_dac (j_compress_ptr cinfo)
       emit_byte(cinfo, cinfo->arith_ac_K[i]);
     }
   }
-#endif                            /* C_ARITH_CODING_SUPPORTED */
+#endif                                 /* C_ARITH_CODING_SUPPORTED */
 }
 
 
@@ -267,7 +267,7 @@ emit_dri (j_compress_ptr cinfo)
 {
   emit_marker(cinfo, M_DRI);
 
-  emit_2bytes(cinfo, 4);          /* fixed length */
+  emit_2bytes(cinfo, 4);               /* fixed length */
 
   emit_2bytes(cinfo, (int) cinfo->restart_interval);
 }
@@ -329,11 +329,11 @@ emit_sos (j_compress_ptr cinfo)
        * but does not seem to be specified in the standard.
        */
       if (cinfo->Ss == 0) {
-        ta = 0;                   /* DC scan */
+        ta = 0;                        /* DC scan */
         if (cinfo->Ah != 0 && !cinfo->arith_code)
-          td = 0;                 /* no DC table either */
+          td = 0;                      /* no DC table either */
       } else {
-        td = 0;                   /* AC scan */
+        td = 0;                        /* AC scan */
       }
     }
     emit_byte(cinfo, (td << 4) + ta);
@@ -365,7 +365,7 @@ emit_jfif_app0 (j_compress_ptr cinfo)
 
   emit_2bytes(cinfo, 2 + 4 + 1 + 2 + 1 + 2 + 2 + 1 + 1); /* length */
 
-  emit_byte(cinfo, 0x4A);         /* Identifier: ASCII "JFIF" */
+  emit_byte(cinfo, 0x4A);              /* Identifier: ASCII "JFIF" */
   emit_byte(cinfo, 0x46);
   emit_byte(cinfo, 0x49);
   emit_byte(cinfo, 0x46);
@@ -375,7 +375,7 @@ emit_jfif_app0 (j_compress_ptr cinfo)
   emit_byte(cinfo, cinfo->density_unit); /* Pixel size information */
   emit_2bytes(cinfo, (int) cinfo->X_density);
   emit_2bytes(cinfo, (int) cinfo->Y_density);
-  emit_byte(cinfo, 0);            /* No thumbnail image */
+  emit_byte(cinfo, 0);                 /* No thumbnail image */
   emit_byte(cinfo, 0);
 }
 
@@ -404,23 +404,23 @@ emit_adobe_app14 (j_compress_ptr cinfo)
 
   emit_2bytes(cinfo, 2 + 5 + 2 + 2 + 2 + 1); /* length */
 
-  emit_byte(cinfo, 0x41);         /* Identifier: ASCII "Adobe" */
+  emit_byte(cinfo, 0x41);              /* Identifier: ASCII "Adobe" */
   emit_byte(cinfo, 0x64);
   emit_byte(cinfo, 0x6F);
   emit_byte(cinfo, 0x62);
   emit_byte(cinfo, 0x65);
-  emit_2bytes(cinfo, 100);        /* Version */
-  emit_2bytes(cinfo, 0);          /* Flags0 */
-  emit_2bytes(cinfo, 0);          /* Flags1 */
+  emit_2bytes(cinfo, 100);             /* Version */
+  emit_2bytes(cinfo, 0);               /* Flags0 */
+  emit_2bytes(cinfo, 0);               /* Flags1 */
   switch (cinfo->jpeg_color_space) {
   case JCS_YCbCr:
-    emit_byte(cinfo, 1);          /* Color transform = 1 */
+    emit_byte(cinfo, 1);               /* Color transform = 1 */
     break;
   case JCS_YCCK:
-    emit_byte(cinfo, 2);          /* Color transform = 2 */
+    emit_byte(cinfo, 2);               /* Color transform = 2 */
     break;
   default:
-    emit_byte(cinfo, 0);          /* Color transform = 0 */
+    emit_byte(cinfo, 0);               /* Color transform = 0 */
     break;
   }
 }
@@ -438,7 +438,7 @@ METHODDEF(void)
 write_marker_header (j_compress_ptr cinfo, int marker, unsigned int datalen)
 /* Emit an arbitrary marker header */
 {
-  if (datalen > (unsigned int) 65533) /* safety check */
+  if (datalen > (unsigned int) 65533)  /* safety check */
     ERREXIT(cinfo, JERR_BAD_LENGTH);
 
   emit_marker(cinfo, (JPEG_MARKER) marker);
@@ -470,14 +470,14 @@ write_file_header (j_compress_ptr cinfo)
 {
   my_marker_ptr marker = (my_marker_ptr) cinfo->marker;
 
-  emit_marker(cinfo, M_SOI);      /* first the SOI */
+  emit_marker(cinfo, M_SOI);           /* first the SOI */
 
   /* SOI is defined to reset restart interval to 0 */
   marker->last_restart_interval = 0;
 
-  if (cinfo->write_JFIF_header)   /* next an optional JFIF APP0 */
+  if (cinfo->write_JFIF_header)        /* next an optional JFIF APP0 */
     emit_jfif_app0(cinfo);
-  if (cinfo->write_Adobe_marker)  /* next an optional Adobe APP14 */
+  if (cinfo->write_Adobe_marker)       /* next an optional Adobe APP14 */
     emit_adobe_app14(cinfo);
 }
 
@@ -529,14 +529,14 @@ write_frame_header (j_compress_ptr cinfo)
 
   /* Emit the proper SOF marker */
   if (cinfo->arith_code) {
-    emit_sof(cinfo, M_SOF9);      /* SOF code for arithmetic coding */
+    emit_sof(cinfo, M_SOF9);           /* SOF code for arithmetic coding */
   } else {
     if (cinfo->progressive_mode)
-      emit_sof(cinfo, M_SOF2);    /* SOF code for progressive Huffman */
+      emit_sof(cinfo, M_SOF2);         /* SOF code for progressive Huffman */
     else if (is_baseline)
-      emit_sof(cinfo, M_SOF0);    /* SOF code for baseline implementation */
+      emit_sof(cinfo, M_SOF0);         /* SOF code for baseline implementation */
     else
-      emit_sof(cinfo, M_SOF1);    /* SOF code for non-baseline Huffman file */
+      emit_sof(cinfo, M_SOF1);         /* SOF code for non-baseline Huffman file */
   }
 }
 
@@ -569,7 +569,7 @@ write_scan_header (j_compress_ptr cinfo)
       if (cinfo->progressive_mode) {
         /* Progressive mode: only DC or only AC tables are used in one scan */
         if (cinfo->Ss == 0) {
-          if (cinfo->Ah == 0)     /* DC needs no table for refinement scan */
+          if (cinfo->Ah == 0)          /* DC needs no table for refinement scan */
             emit_dht(cinfo, compptr->dc_tbl_no, FALSE);
         } else {
           emit_dht(cinfo, compptr->ac_tbl_no, TRUE);

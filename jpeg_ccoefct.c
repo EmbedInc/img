@@ -32,12 +32,12 @@
 /* Private buffer controller object */
 
 typedef struct {
-  struct jpeg_c_coef_controller pub; /* public fields */
+  struct jpeg_c_coef_controller pub;   /* public fields */
 
-  JDIMENSION iMCU_row_num;        /* iMCU row # within image */
-  JDIMENSION mcu_ctr;             /* counts MCUs processed in current row */
-  int MCU_vert_offset;            /* counts MCU rows within iMCU row */
-  int MCU_rows_per_iMCU_row;      /* number of such rows needed */
+  JDIMENSION iMCU_row_num;             /* iMCU row # within image */
+  JDIMENSION mcu_ctr;                  /* counts MCUs processed in current row */
+  int MCU_vert_offset;                 /* counts MCU rows within iMCU row */
+  int MCU_rows_per_iMCU_row;           /* number of such rows needed */
 
   /* For single-pass compression, it's sufficient to buffer just one MCU
    * (although this may prove a bit slow in practice).  We allocate a
@@ -143,7 +143,7 @@ METHODDEF(boolean)
 compress_data (j_compress_ptr cinfo, JSAMPIMAGE input_buf)
 {
   my_coef_ptr coef = (my_coef_ptr) cinfo->coef;
-  JDIMENSION MCU_col_num;         /* index of current MCU within row */
+  JDIMENSION MCU_col_num;              /* index of current MCU within row */
   JDIMENSION last_MCU_col = cinfo->MCUs_per_row - 1;
   JDIMENSION last_iMCU_row = cinfo->total_iMCU_rows - 1;
   int blkn, bi, ci, yindex, yoffset, blockcnt;
@@ -170,7 +170,7 @@ compress_data (j_compress_ptr cinfo, JSAMPIMAGE input_buf)
         blockcnt = (MCU_col_num < last_MCU_col) ? compptr->MCU_width
                                                 : compptr->last_col_width;
         xpos = MCU_col_num * compptr->MCU_sample_width;
-        ypos = yoffset * DCTSIZE; /* ypos == (yoffset+yindex) * DCTSIZE */
+        ypos = yoffset * DCTSIZE;      /* ypos == (yoffset+yindex) * DCTSIZE */
         for (yindex = 0; yindex < compptr->MCU_height; yindex++) {
           if (coef->iMCU_row_num < last_iMCU_row ||
               yoffset+yindex < compptr->last_row_height) {
@@ -299,7 +299,7 @@ compress_first_pass (j_compress_ptr cinfo, JSAMPIMAGE input_buf)
      * This squeezes a few more bytes out of the resulting file...
      */
     if (coef->iMCU_row_num == last_iMCU_row) {
-      blocks_across += ndummy;    /* include lower right corner */
+      blocks_across += ndummy;         /* include lower right corner */
       MCUs_across = blocks_across / h_samp_factor;
       for (block_row = block_rows; block_row < compptr->v_samp_factor;
            block_row++) {
@@ -341,7 +341,7 @@ METHODDEF(boolean)
 compress_output (j_compress_ptr cinfo, JSAMPIMAGE input_buf)
 {
   my_coef_ptr coef = (my_coef_ptr) cinfo->coef;
-  JDIMENSION MCU_col_num;         /* index of current MCU within row */
+  JDIMENSION MCU_col_num;              /* index of current MCU within row */
   int blkn, ci, xindex, yindex, yoffset;
   JDIMENSION start_col;
   JBLOCKARRAY buffer[MAX_COMPS_IN_SCAN];
@@ -366,7 +366,7 @@ compress_output (j_compress_ptr cinfo, JSAMPIMAGE input_buf)
     for (MCU_col_num = coef->mcu_ctr; MCU_col_num < cinfo->MCUs_per_row;
          MCU_col_num++) {
       /* Construct list of pointers to DCT blocks belonging to this MCU */
-      blkn = 0;                   /* index of current DCT block within MCU */
+      blkn = 0;                        /* index of current DCT block within MCU */
       for (ci = 0; ci < cinfo->comps_in_scan; ci++) {
         compptr = cinfo->cur_comp_info[ci];
         start_col = MCU_col_num * compptr->MCU_width;
@@ -394,7 +394,7 @@ compress_output (j_compress_ptr cinfo, JSAMPIMAGE input_buf)
   return TRUE;
 }
 
-#endif                            /* FULL_COEF_BUFFER_SUPPORTED */
+#endif                                 /* FULL_COEF_BUFFER_SUPPORTED */
 
 
 /*
@@ -444,6 +444,6 @@ jinit_c_coef_controller (j_compress_ptr cinfo, boolean need_full_buffer)
     for (i = 0; i < C_MAX_BLOCKS_IN_MCU; i++) {
       coef->MCU_buffer[i] = buffer + i;
     }
-    coef->whole_image[0] = NULL;  /* flag for no virtual arrays */
+    coef->whole_image[0] = NULL;       /* flag for no virtual arrays */
   }
 }

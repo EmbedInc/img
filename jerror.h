@@ -25,8 +25,8 @@
 #else
 /* Repeated inclusions of this file are no-ops unless JMESSAGE is defined */
 #define JMESSAGE(code, string)
-#endif                            /* JERROR_H */
-#endif                            /* JMESSAGE */
+#endif                                 /* JERROR_H */
+#endif                                 /* JMESSAGE */
 
 #ifdef JMAKE_ENUM_LIST
 
@@ -34,7 +34,7 @@ typedef enum {
 
 #define JMESSAGE(code, string)   code ,
 
-#endif                            /* JMAKE_ENUM_LIST */
+#endif                                 /* JMAKE_ENUM_LIST */
 
 JMESSAGE(JMSG_NOMESSAGE, "Bogus message code %d") /* Must be first entry! */
 
@@ -189,7 +189,7 @@ JMESSAGE(JWRN_TOO_MUCH_DATA, "Application transferred too many scanlines")
 } J_MESSAGE_CODE;
 
 #undef JMAKE_ENUM_LIST
-#endif                            /* JMAKE_ENUM_LIST */
+#endif                                 /* JMAKE_ENUM_LIST */
 
 /* Zap JMESSAGE macro so that future re-inclusions do nothing by default */
 #undef JMESSAGE
@@ -288,4 +288,4 @@ JMESSAGE(JWRN_TOO_MUCH_DATA, "Application transferred too many scanlines")
    strncpy((cinfo)->err->msg_parm.s, (str), JMSG_STR_PARM_MAX), \
    (*(cinfo)->err->emit_message) ((j_common_ptr) (cinfo), (lvl)))
 
-#endif                            /* JERROR_H */
+#endif                                 /* JERROR_H */

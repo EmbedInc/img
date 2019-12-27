@@ -6,7 +6,7 @@
 }
 module img_rewind;
 define img_rewind;
-%include '/cognivision_links/dsee_libs/img/img2.ins.pas';
+%include 'img2.ins.pas';
 
 procedure img_rewind (                 {rewind image file to just before first pixel}
   in out  img: img_conn_t;             {user handle to this image file}

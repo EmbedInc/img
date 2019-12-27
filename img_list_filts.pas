@@ -8,7 +8,7 @@
 }
 module img_list_filts;
 define img_list_filts;
-%include '/cognivision_links/dsee_libs/img/img2.ins.pas';
+%include 'img2.ins.pas';
 
 procedure img_list_filts (             {get list of supported filters}
   in      rw: file_rw_t;               {read/write mode asking about}

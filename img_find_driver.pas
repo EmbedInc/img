@@ -8,7 +8,7 @@
 }
 module img_find_driver;
 define img_find_driver;
-%include '/cognivision_links/dsee_libs/img/img2.ins.pas';
+%include 'img2.ins.pas';
 
 procedure img_find_driver (            {find driver associated with image file name}
   in      fnam: univ string_var_arg_t; {file name with driver name extension}

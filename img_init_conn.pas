@@ -6,7 +6,7 @@
 }
 module img_init_conn;
 define img_init_conn;
-%include '/cognivision_links/dsee_libs/img/img2.ins.pas';
+%include 'img2.ins.pas';
 
 procedure img_init_conn (              {init user conn, allocates private block}
   out     img: img_conn_t);            {properly initialized connection handle}

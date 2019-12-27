@@ -47,7 +47,7 @@ jpeg_write_coefficients (j_compress_ptr cinfo, jvirt_barray_ptr * coef_arrays)
   /* Perform master selection of active modules */
   transencode_master_selection(cinfo, coef_arrays);
   /* Wait for jpeg_finish_compress() call */
-  cinfo->next_scanline = 0;       /* so jpeg_write_marker works */
+  cinfo->next_scanline = 0;            /* so jpeg_write_marker works */
   cinfo->global_state = CSTATE_WRCOEFS;
 }
 
@@ -163,7 +163,7 @@ transencode_master_selection (j_compress_ptr cinfo,
    */
   cinfo->input_components = 1;
   /* Initialize master control (includes parameter checking/processing) */
-  jinit_c_master_control(cinfo, TRUE /* transcode only */);
+  jinit_c_master_control(cinfo, TRUE   /* transcode only */);
 
   /* Entropy encoding: either Huffman or arithmetic coding. */
   if (cinfo->arith_code) {
@@ -206,12 +206,12 @@ transencode_master_selection (j_compress_ptr cinfo,
 /* Private buffer controller object */
 
 typedef struct {
-  struct jpeg_c_coef_controller pub; /* public fields */
+  struct jpeg_c_coef_controller pub;   /* public fields */
 
-  JDIMENSION iMCU_row_num;        /* iMCU row # within image */
-  JDIMENSION mcu_ctr;             /* counts MCUs processed in current row */
-  int MCU_vert_offset;            /* counts MCU rows within iMCU row */
-  int MCU_rows_per_iMCU_row;      /* number of such rows needed */
+  JDIMENSION iMCU_row_num;             /* iMCU row # within image */
+  JDIMENSION mcu_ctr;                  /* counts MCUs processed in current row */
+  int MCU_vert_offset;                 /* counts MCU rows within iMCU row */
+  int MCU_rows_per_iMCU_row;           /* number of such rows needed */
 
   /* Virtual block array for each component. */
   jvirt_barray_ptr * whole_image;
@@ -278,7 +278,7 @@ METHODDEF(boolean)
 compress_output (j_compress_ptr cinfo, JSAMPIMAGE input_buf)
 {
   my_coef_ptr coef = (my_coef_ptr) cinfo->coef;
-  JDIMENSION MCU_col_num;         /* index of current MCU within row */
+  JDIMENSION MCU_col_num;              /* index of current MCU within row */
   JDIMENSION last_MCU_col = cinfo->MCUs_per_row - 1;
   JDIMENSION last_iMCU_row = cinfo->total_iMCU_rows - 1;
   int blkn, ci, xindex, yindex, yoffset, blockcnt;
@@ -303,7 +303,7 @@ compress_output (j_compress_ptr cinfo, JSAMPIMAGE input_buf)
     for (MCU_col_num = coef->mcu_ctr; MCU_col_num < cinfo->MCUs_per_row;
          MCU_col_num++) {
       /* Construct list of pointers to DCT blocks belonging to this MCU */
-      blkn = 0;                   /* index of current DCT block within MCU */
+      blkn = 0;                        /* index of current DCT block within MCU */
       for (ci = 0; ci < cinfo->comps_in_scan; ci++) {
         compptr = cinfo->cur_comp_info[ci];
         start_col = MCU_col_num * compptr->MCU_width;

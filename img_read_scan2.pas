@@ -6,7 +6,7 @@
 }
 module img_read_scan2;
 define img_read_scan2;
-%include '/cognivision_links/dsee_libs/img/img2.ins.pas';
+%include 'img2.ins.pas';
 
 procedure img_read_scan2 (             {read next scan line as format 2 pixels}
   in out  img: img_conn_t;             {handle to this image data stream}

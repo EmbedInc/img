@@ -32,7 +32,7 @@ jpeg_CreateDecompress (j_decompress_ptr cinfo, int version, size_t structsize)
   int i;
 
   /* Guard against version mismatches between library and caller. */
-  cinfo->mem = NULL;              /* so jpeg_destroy knows mem mgr not called */
+  cinfo->mem = NULL;                   /* so jpeg_destroy knows mem mgr not called */
   if (version != JPEG_LIB_VERSION)
     ERREXIT2(cinfo, JERR_BAD_LIB_VERSION, JPEG_LIB_VERSION, version);
   if (structsize != SIZEOF(struct jpeg_decompress_struct))
@@ -90,7 +90,7 @@ jpeg_CreateDecompress (j_decompress_ptr cinfo, int version, size_t structsize)
 GLOBAL(void)
 jpeg_destroy_decompress (j_decompress_ptr cinfo)
 {
-  jpeg_destroy((j_common_ptr) cinfo); /* use common routine */
+  jpeg_destroy((j_common_ptr) cinfo);  /* use common routine */
 }
 
 
@@ -102,7 +102,7 @@ jpeg_destroy_decompress (j_decompress_ptr cinfo)
 GLOBAL(void)
 jpeg_abort_decompress (j_decompress_ptr cinfo)
 {
-  jpeg_abort((j_common_ptr) cinfo); /* use common routine */
+  jpeg_abort((j_common_ptr) cinfo);    /* use common routine */
 }
 
 
@@ -185,7 +185,7 @@ default_decompress_parms (j_decompress_ptr cinfo)
   }
 
   /* Set defaults for other decompression parameters. */
-  cinfo->scale_num = 1;           /* 1:1 scaling */
+  cinfo->scale_num = 1;                /* 1:1 scaling */
   cinfo->scale_denom = 1;
   cinfo->output_gamma = 1.0;
   cinfo->buffered_image = FALSE;
@@ -253,13 +253,13 @@ jpeg_read_header (j_decompress_ptr cinfo, boolean require_image)
     retcode = JPEG_HEADER_OK;
     break;
   case JPEG_REACHED_EOI:
-    if (require_image)            /* Complain if application wanted an image */
+    if (require_image)                 /* Complain if application wanted an image */
       ERREXIT(cinfo, JERR_NO_IMAGE);
     /* Reset to start state; it would be safer to require the application to
      * call jpeg_abort, but we can't change it now for compatibility reasons.
      * A side effect is to free any temporary memory (there shouldn't be any).
      */
-    jpeg_abort((j_common_ptr) cinfo); /* sets state = DSTATE_START */
+    jpeg_abort((j_common_ptr) cinfo);  /* sets state = DSTATE_START */
     retcode = JPEG_HEADER_TABLES_ONLY;
     break;
   case JPEG_SUSPENDED:
@@ -385,7 +385,7 @@ jpeg_finish_decompress (j_decompress_ptr cinfo)
   /* Read until EOI */
   while (! cinfo->inputctl->eoi_reached) {
     if ((*cinfo->inputctl->consume_input) (cinfo) == JPEG_SUSPENDED)
-      return FALSE;               /* Suspend, come back later */
+      return FALSE;                    /* Suspend, come back later */
   }
   /* Do final cleanup */
   (*cinfo->src->term_source) (cinfo);

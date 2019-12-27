@@ -28,7 +28,7 @@
 #include <windows.h>
 #endif
 
-#ifndef EXIT_FAILURE              /* define exit() codes if not provided */
+#ifndef EXIT_FAILURE                   /* define exit() codes if not provided */
 #define EXIT_FAILURE  1
 #endif
 
@@ -213,7 +213,7 @@ reset_error_mgr (j_common_ptr cinfo)
 {
   cinfo->err->num_warnings = 0;
   /* trace_level is not reset since it is an application-supplied parameter */
-  cinfo->err->msg_code = 0;       /* may be useful as a flag for "no error" */
+  cinfo->err->msg_code = 0;            /* may be useful as a flag for "no error" */
 }
 
 
@@ -236,16 +236,16 @@ jpeg_std_error (struct jpeg_error_mgr * err)
   err->format_message = format_message;
   err->reset_error_mgr = reset_error_mgr;
 
-  err->trace_level = 0;           /* default = no tracing */
-  err->num_warnings = 0;          /* no warnings emitted yet */
-  err->msg_code = 0;              /* may be useful as a flag for "no error" */
+  err->trace_level = 0;                /* default = no tracing */
+  err->num_warnings = 0;               /* no warnings emitted yet */
+  err->msg_code = 0;                   /* may be useful as a flag for "no error" */
 
   /* Initialize message table pointers */
   err->jpeg_message_table = jpeg_std_message_table;
   err->last_jpeg_message = (int) JMSG_LASTMSGCODE - 1;
 
   err->addon_message_table = NULL;
-  err->first_addon_message = 0;   /* for safety */
+  err->first_addon_message = 0;        /* for safety */
   err->last_addon_message = 0;
 
   return err;

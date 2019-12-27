@@ -2,7 +2,7 @@ module img_next;
 define img_next_write_img;
 define img_next_read_img;
 define img_end;
-%include '/cognivision_links/dsee_libs/img/img2.ins.pas';
+%include 'img2.ins.pas';
 {
 *****************************************************************
 *

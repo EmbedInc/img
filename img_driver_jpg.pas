@@ -6,8 +6,8 @@
 module img_driver_jpg;
 define img_d_jpg_open_read;
 define img_d_jpg_open_write;
-%include '/cognivision_links/dsee_libs/img/img2.ins.pas';
-%include '/cognivision_links/dsee_libs/img/jpeg_img.ins.pas';
+%include 'img2.ins.pas';
+%include 'jpeg_img.ins.pas';
 
 const
   out_bufsize_k = 8192;                {max output bytes to buffer before writing}

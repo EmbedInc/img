@@ -42,7 +42,7 @@
 /* Private subobject */
 
 typedef struct {
-  struct jpeg_upsampler pub;      /* public fields */
+  struct jpeg_upsampler pub;           /* public fields */
 
   /* Pointer to routine to do actual upsampling/conversion of one row group */
   JMETHOD(void, upmethod, (j_decompress_ptr cinfo,
@@ -50,10 +50,10 @@ typedef struct {
                            JSAMPARRAY output_buf));
 
   /* Private state for YCC->RGB conversion */
-  int * Cr_r_tab;                 /* => table for Cr to R conversion */
-  int * Cb_b_tab;                 /* => table for Cb to B conversion */
-  INT32 * Cr_g_tab;               /* => table for Cr to G conversion */
-  INT32 * Cb_g_tab;               /* => table for Cb to G conversion */
+  int * Cr_r_tab;                      /* => table for Cr to R conversion */
+  int * Cb_b_tab;                      /* => table for Cb to B conversion */
+  INT32 * Cr_g_tab;                    /* => table for Cr to G conversion */
+  INT32 * Cb_g_tab;                    /* => table for Cb to G conversion */
 
   /* For 2:1 vertical sampling, we produce two output rows at a time.
    * We need a "spare" row buffer to hold the second output row if the
@@ -61,15 +61,15 @@ typedef struct {
    * to discard the dummy last row if the image height is odd.
    */
   JSAMPROW spare_row;
-  boolean spare_full;             /* T if spare buffer is occupied */
+  boolean spare_full;                  /* T if spare buffer is occupied */
 
-  JDIMENSION out_row_width;       /* samples per output row */
-  JDIMENSION rows_to_go;          /* counts rows remaining in image */
+  JDIMENSION out_row_width;            /* samples per output row */
+  JDIMENSION rows_to_go;               /* counts rows remaining in image */
 } my_upsampler;
 
 typedef my_upsampler * my_upsample_ptr;
 
-#define SCALEBITS       16        /* speediest right-shift on some machines */
+#define SCALEBITS       16             /* speediest right-shift on some machines */
 #define ONE_HALF        ((INT32) 1 << (SCALEBITS-1))
 #define FIX(x)          ((INT32) ((x) * (1L<<SCALEBITS) + 0.5))
 
@@ -150,7 +150,7 @@ merged_2v_upsample (j_decompress_ptr cinfo,
 {
   my_upsample_ptr upsample = (my_upsample_ptr) cinfo->upsample;
   JSAMPROW work_ptrs[2];
-  JDIMENSION num_rows;            /* number of rows returned to caller */
+  JDIMENSION num_rows;                 /* number of rows returned to caller */
 
   if (upsample->spare_full) {
     /* If we have a spare row saved from a previous cycle, just return it. */
@@ -397,4 +397,4 @@ jinit_merged_upsampler (j_decompress_ptr cinfo)
   build_ycc_rgb_table(cinfo);
 }
 
-#endif                            /* UPSAMPLE_MERGING_SUPPORTED */
+#endif                                 /* UPSAMPLE_MERGING_SUPPORTED */

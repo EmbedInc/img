@@ -5,7 +5,7 @@
 }
 module img_driver_bmp;
 define img_d_bmp_open_write;
-%include '/cognivision_links/dsee_libs/img/img2.ins.pas';
+%include 'img2.ins.pas';
 
 type
   dibcompress_k_t = integer32 (        {DIB compression strategy IDs}

@@ -12,7 +12,7 @@
 }
 module img_mem_alloc;
 define img_mem_alloc;
-%include '/cognivision_links/dsee_libs/img/img2.ins.pas';
+%include 'img2.ins.pas';
 
 procedure img_mem_alloc (              {allocate memory associated with connection}
   in out  img: img_conn_t;             {handle to established image data stream}

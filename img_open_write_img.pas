@@ -27,7 +27,7 @@
 }
 module img_open_write_img;
 define img_open_write_img;
-%include '/cognivision_links/dsee_libs/img/img2.ins.pas';
+%include 'img2.ins.pas';
 
 procedure img_open_write_img (         {open an image file for write}
   in      fnam: univ string_var_arg_t; {name of image file to open}

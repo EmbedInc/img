@@ -6,7 +6,7 @@
 }
 module img_write_scan2_scan1;
 define img_write_scan2_scan1;
-%include '/cognivision_links/dsee_libs/img/img2.ins.pas';
+%include 'img2.ins.pas';
 
 procedure img_write_scan2_scan1 (      {write fmt 2 scan by converting to fmt 1}
   in out  img: img_conn_t;             {handle to this image data stream}

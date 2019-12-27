@@ -1,8 +1,8 @@
 @echo off
 rem
-rem   BUILD_LIB [-dbg]
+rem   BUILD_LIB
 rem
-rem   Build the IMGLIB library.
+rem   Build the IMG library.
 rem
 setlocal
 call build_img_lib

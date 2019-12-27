@@ -5,7 +5,7 @@
 module img_driver_gif;
 define img_d_gif_open_write;
 define img_d_gif_open_read;
-%include '/cognivision_links/dsee_libs/img/img2.ins.pas';
+%include 'img2.ins.pas';
 {
 *******************************************************************
 *******************************************************************

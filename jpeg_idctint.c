@@ -28,7 +28,7 @@
 #define JPEG_INTERNALS
 #include "jinclude.h"
 #include "jpeglib.h"
-#include "jdct.h"                 /* Private declarations for DCT subsystem */
+#include "jdct.h"                      /* Private declarations for DCT subsystem */
 
 #ifdef DCT_ISLOW_SUPPORTED
 
@@ -79,7 +79,7 @@
 #define PASS1_BITS  2
 #else
 #define CONST_BITS  13
-#define PASS1_BITS  1             /* lose a little precision to avoid overflow */
+#define PASS1_BITS  1                  /* lose a little precision to avoid overflow */
 #endif
 
 /* Some C compilers fail to reduce "FIX(constant)" at compile time, thus
@@ -158,7 +158,7 @@ jpeg_idct_islow (j_decompress_ptr cinfo, jpeg_component_info * compptr,
   JSAMPROW outptr;
   JSAMPLE *range_limit = IDCT_range_limit(cinfo);
   int ctr;
-  int workspace[DCTSIZE2];        /* buffers data between passes */
+  int workspace[DCTSIZE2];             /* buffers data between passes */
   SHIFT_TEMPS
 
   /* Pass 1: process columns from input, store into work array. */
@@ -194,7 +194,7 @@ jpeg_idct_islow (j_decompress_ptr cinfo, jpeg_component_info * compptr,
       wsptr[DCTSIZE*6] = dcval;
       wsptr[DCTSIZE*7] = dcval;
 
-      inptr++;                    /* advance pointers to next column */
+      inptr++;                         /* advance pointers to next column */
       quantptr++;
       wsptr++;
       continue;
@@ -264,7 +264,7 @@ jpeg_idct_islow (j_decompress_ptr cinfo, jpeg_component_info * compptr,
     wsptr[DCTSIZE*3] = (int) DESCALE(tmp13 + tmp0, CONST_BITS-PASS1_BITS);
     wsptr[DCTSIZE*4] = (int) DESCALE(tmp13 - tmp0, CONST_BITS-PASS1_BITS);
 
-    inptr++;                      /* advance pointers to next column */
+    inptr++;                           /* advance pointers to next column */
     quantptr++;
     wsptr++;
   }
@@ -300,7 +300,7 @@ jpeg_idct_islow (j_decompress_ptr cinfo, jpeg_component_info * compptr,
       outptr[6] = dcval;
       outptr[7] = dcval;
 
-      wsptr += DCTSIZE;           /* advance pointer to next row */
+      wsptr += DCTSIZE;                /* advance pointer to next row */
       continue;
     }
 #endif
@@ -382,8 +382,8 @@ jpeg_idct_islow (j_decompress_ptr cinfo, jpeg_component_info * compptr,
                                           CONST_BITS+PASS1_BITS+3)
                             & RANGE_MASK];
 
-    wsptr += DCTSIZE;             /* advance pointer to next row */
+    wsptr += DCTSIZE;                  /* advance pointer to next row */
   }
 }
 
-#endif                            /* DCT_ISLOW_SUPPORTED */
+#endif                                 /* DCT_ISLOW_SUPPORTED */

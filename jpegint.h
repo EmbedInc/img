@@ -13,30 +13,30 @@
 
 /* Declarations for both compression & decompression */
 
-typedef enum {                    /* Operating modes for buffer controllers */
-        JBUF_PASS_THRU,           /* Plain stripwise operation */
+typedef enum {                         /* Operating modes for buffer controllers */
+        JBUF_PASS_THRU,                /* Plain stripwise operation */
         /* Remaining modes require a full-image buffer to have been created */
-        JBUF_SAVE_SOURCE,         /* Run source subobject only, save output */
-        JBUF_CRANK_DEST,          /* Run dest subobject only, using saved data */
-        JBUF_SAVE_AND_PASS        /* Run both subobjects, save output */
+        JBUF_SAVE_SOURCE,              /* Run source subobject only, save output */
+        JBUF_CRANK_DEST,               /* Run dest subobject only, using saved data */
+        JBUF_SAVE_AND_PASS             /* Run both subobjects, save output */
 } J_BUF_MODE;
 
 /* Values of global_state field (jdapi.c has some dependencies on ordering!) */
-#define CSTATE_START    100       /* after create_compress */
-#define CSTATE_SCANNING 101       /* start_compress done, write_scanlines OK */
-#define CSTATE_RAW_OK   102       /* start_compress done, write_raw_data OK */
-#define CSTATE_WRCOEFS  103       /* jpeg_write_coefficients done */
-#define DSTATE_START    200       /* after create_decompress */
-#define DSTATE_INHEADER 201       /* reading header markers, no SOS yet */
-#define DSTATE_READY    202       /* found SOS, ready for start_decompress */
-#define DSTATE_PRELOAD  203       /* reading multiscan file in start_decompress*/
-#define DSTATE_PRESCAN  204       /* performing dummy pass for 2-pass quant */
-#define DSTATE_SCANNING 205       /* start_decompress done, read_scanlines OK */
-#define DSTATE_RAW_OK   206       /* start_decompress done, read_raw_data OK */
-#define DSTATE_BUFIMAGE 207       /* expecting jpeg_start_output */
-#define DSTATE_BUFPOST  208       /* looking for SOS/EOI in jpeg_finish_output */
-#define DSTATE_RDCOEFS  209       /* reading file in jpeg_read_coefficients */
-#define DSTATE_STOPPING 210       /* looking for EOI in jpeg_finish_decompress */
+#define CSTATE_START    100            /* after create_compress */
+#define CSTATE_SCANNING 101            /* start_compress done, write_scanlines OK */
+#define CSTATE_RAW_OK   102            /* start_compress done, write_raw_data OK */
+#define CSTATE_WRCOEFS  103            /* jpeg_write_coefficients done */
+#define DSTATE_START    200            /* after create_decompress */
+#define DSTATE_INHEADER 201            /* reading header markers, no SOS yet */
+#define DSTATE_READY    202            /* found SOS, ready for start_decompress */
+#define DSTATE_PRELOAD  203            /* reading multiscan file in start_decompress*/
+#define DSTATE_PRESCAN  204            /* performing dummy pass for 2-pass quant */
+#define DSTATE_SCANNING 205            /* start_decompress done, read_scanlines OK */
+#define DSTATE_RAW_OK   206            /* start_decompress done, read_raw_data OK */
+#define DSTATE_BUFIMAGE 207            /* expecting jpeg_start_output */
+#define DSTATE_BUFPOST  208            /* looking for SOS/EOI in jpeg_finish_output */
+#define DSTATE_RDCOEFS  209            /* reading file in jpeg_read_coefficients */
+#define DSTATE_STOPPING 210            /* looking for EOI in jpeg_finish_decompress */
 
 
 /* Declarations for compression modules */
@@ -48,8 +48,8 @@ struct jpeg_comp_master {
   JMETHOD(void, finish_pass, (j_compress_ptr cinfo));
 
   /* State variables made visible to other modules */
-  boolean call_pass_startup;      /* True if pass_startup must be called */
-  boolean is_last_pass;           /* True during last pass */
+  boolean call_pass_startup;           /* True if pass_startup must be called */
+  boolean is_last_pass;                /* True during last pass */
 };
 
 /* Main buffer control (downsampled-data buffer) */
@@ -95,7 +95,7 @@ struct jpeg_downsampler {
                              JSAMPIMAGE output_buf,
                              JDIMENSION out_row_group_index));
 
-  boolean need_context_rows;      /* TRUE if need rows above & below */
+  boolean need_context_rows;           /* TRUE if need rows above & below */
 };
 
 /* Forward DCT (also controls coefficient quantization) */
@@ -139,7 +139,7 @@ struct jpeg_decomp_master {
   JMETHOD(void, finish_output_pass, (j_decompress_ptr cinfo));
 
   /* State variables made visible to other modules */
-  boolean is_dummy_pass;          /* True during 1st pass for 2-pass quant */
+  boolean is_dummy_pass;               /* True during 1st pass for 2-pass quant */
 };
 
 /* Input control module */
@@ -150,8 +150,8 @@ struct jpeg_input_controller {
   JMETHOD(void, finish_input_pass, (j_decompress_ptr cinfo));
 
   /* State variables made visible to other modules */
-  boolean has_multiple_scans;     /* True if file has multiple scans */
-  boolean eoi_reached;            /* True when EOI has been consumed */
+  boolean has_multiple_scans;          /* True if file has multiple scans */
+  boolean eoi_reached;                 /* True when EOI has been consumed */
 };
 
 /* Main buffer control (downsampled-data buffer) */
@@ -199,10 +199,10 @@ struct jpeg_marker_reader {
   /* State of marker reader --- nominally internal, but applications
    * supplying COM or APPn handlers might like to know the state.
    */
-  boolean saw_SOI;                /* found SOI? */
-  boolean saw_SOF;                /* found SOF? */
-  int next_restart_num;           /* next restart number expected (0-7) */
-  unsigned int discarded_bytes;   /* # of bytes skipped looking for a marker */
+  boolean saw_SOI;                     /* found SOI? */
+  boolean saw_SOF;                     /* found SOF? */
+  int next_restart_num;                /* next restart number expected (0-7) */
+  unsigned int discarded_bytes;        /* # of bytes skipped looking for a marker */
 };
 
 /* Entropy decoding */
@@ -213,7 +213,7 @@ struct jpeg_entropy_decoder {
 
   /* This is here to share code between baseline and progressive decoders; */
   /* other modules probably should not use it */
-  boolean insufficient_data;      /* set TRUE after emitting warning */
+  boolean insufficient_data;           /* set TRUE after emitting warning */
 };
 
 /* Inverse DCT (also performs dequantization) */
@@ -239,7 +239,7 @@ struct jpeg_upsampler {
                            JDIMENSION *out_row_ctr,
                            JDIMENSION out_rows_avail));
 
-  boolean need_context_rows;      /* TRUE if need rows above & below */
+  boolean need_context_rows;           /* TRUE if need rows above & below */
 };
 
 /* Colorspace conversion */
@@ -327,7 +327,7 @@ struct jpeg_color_quantizer {
 #define jzero_far               jZeroFar
 #define jpeg_zigzag_order       jZIGTable
 #define jpeg_natural_order      jZAGTable
-#endif                            /* NEED_SHORT_EXTERNAL_NAMES */
+#endif                                 /* NEED_SHORT_EXTERNAL_NAMES */
 
 
 /* Compression module initialization routines */
@@ -377,16 +377,16 @@ EXTERN(void) jcopy_block_row JPP((JBLOCKROW input_row, JBLOCKROW output_row,
                                   JDIMENSION num_blocks));
 EXTERN(void) jzero_far JPP((void FAR * target, size_t bytestozero));
 /* Constant tables in jutils.c */
-#if 0                             /* This table is not actually needed in v6a */
-extern const int jpeg_zigzag_order[]; /* natural coef order to zigzag order */
+#if 0                                  /* This table is not actually needed in v6a */
+extern const int jpeg_zigzag_order[];  /* natural coef order to zigzag order */
 #endif
 extern const int jpeg_natural_order[]; /* zigzag coef order to natural order */
 
 /* Suppress undefined-structure complaints if necessary. */
 
 #ifdef INCOMPLETE_TYPES_BROKEN
-#ifndef AM_MEMORY_MANAGER         /* only jmemmgr.c defines these */
+#ifndef AM_MEMORY_MANAGER              /* only jmemmgr.c defines these */
 struct jvirt_sarray_control { long dummy; };
 struct jvirt_barray_control { long dummy; };
 #endif
-#endif                            /* INCOMPLETE_TYPES_BROKEN */
+#endif                                 /* INCOMPLETE_TYPES_BROKEN */

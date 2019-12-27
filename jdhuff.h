@@ -16,18 +16,18 @@
 #define jpeg_make_d_derived_tbl jMkDDerived
 #define jpeg_fill_bit_buffer    jFilBitBuf
 #define jpeg_huff_decode        jHufDecode
-#endif                            /* NEED_SHORT_EXTERNAL_NAMES */
+#endif                                 /* NEED_SHORT_EXTERNAL_NAMES */
 
 
 /* Derived data constructed for each Huffman table */
 
-#define HUFF_LOOKAHEAD  8         /* # of bits of lookahead */
+#define HUFF_LOOKAHEAD  8              /* # of bits of lookahead */
 
 typedef struct {
   /* Basic tables: (element [0] of each array is unused) */
-  INT32 maxcode[18];              /* largest code of length k (-1 if none) */
+  INT32 maxcode[18];                   /* largest code of length k (-1 if none) */
   /* (maxcode[17] is a sentinel to ensure jpeg_huff_decode terminates) */
-  INT32 valoffset[17];            /* huffval[] offset for codes of length k */
+  INT32 valoffset[17];                 /* huffval[] offset for codes of length k */
   /* valoffset[k] = huffval[] index of 1st symbol of code length k, less
    * the smallest code of length k; so given a code of length k, the
    * corresponding symbol is huffval[code + valoffset[k]]
@@ -41,8 +41,8 @@ typedef struct {
    * than HUFF_LOOKAHEAD bits long, we can obtain its length and
    * the corresponding symbol directly from these tables.
    */
-  int look_nbits[1<<HUFF_LOOKAHEAD]; /* # bits, or 0 if too long */
-  UINT8 look_sym[1<<HUFF_LOOKAHEAD]; /* symbol, or unused */
+  int look_nbits[1<<HUFF_LOOKAHEAD];   /* # bits, or 0 if too long */
+  UINT8 look_sym[1<<HUFF_LOOKAHEAD];   /* symbol, or unused */
 } d_derived_tbl;
 
 /* Expand a Huffman table definition into the derived format */
@@ -69,8 +69,8 @@ EXTERN(void) jpeg_make_d_derived_tbl
  * necessary.
  */
 
-typedef INT32 bit_buf_type;       /* type of bit-extraction buffer */
-#define BIT_BUF_SIZE  32          /* size of buffer in bits */
+typedef INT32 bit_buf_type;            /* type of bit-extraction buffer */
+#define BIT_BUF_SIZE  32               /* size of buffer in bits */
 
 /* If long is > 32 bits on your machine, and shifting/masking longs is
  * reasonably fast, making bit_buf_type be long and setting BIT_BUF_SIZE
@@ -79,23 +79,23 @@ typedef INT32 bit_buf_type;       /* type of bit-extraction buffer */
  * because not all machines measure sizeof in 8-bit bytes.
  */
 
-typedef struct {                  /* Bitreading state saved across MCUs */
-  bit_buf_type get_buffer;        /* current bit-extraction buffer */
-  int bits_left;                  /* # of unused bits in it */
+typedef struct {                       /* Bitreading state saved across MCUs */
+  bit_buf_type get_buffer;             /* current bit-extraction buffer */
+  int bits_left;                       /* # of unused bits in it */
 } bitread_perm_state;
 
-typedef struct {                  /* Bitreading working state within an MCU */
+typedef struct {                       /* Bitreading working state within an MCU */
   /* Current data source location */
   /* We need a copy, rather than munging the original, in case of suspension */
-  const JOCTET * next_input_byte; /* => next byte to read from source */
-  size_t bytes_in_buffer;         /* # of bytes remaining in source buffer */
+  const JOCTET * next_input_byte;      /* => next byte to read from source */
+  size_t bytes_in_buffer;              /* # of bytes remaining in source buffer */
   /* Bit input buffer --- note these values are kept in register variables,
    * not in this struct, inside the inner loops.
    */
-  bit_buf_type get_buffer;        /* current bit-extraction buffer */
-  int bits_left;                  /* # of unused bits in it */
+  bit_buf_type get_buffer;             /* current bit-extraction buffer */
+  int bits_left;                       /* # of unused bits in it */
   /* Pointer needed by jpeg_fill_bit_buffer. */
-  j_decompress_ptr cinfo;         /* back link to decompress master record */
+  j_decompress_ptr cinfo;              /* back link to decompress master record */
 } bitread_working_state;
 
 /* Macros to declare and load/save bitread local variables. */

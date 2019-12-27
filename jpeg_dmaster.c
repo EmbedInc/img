@@ -19,11 +19,11 @@
 /* Private state */
 
 typedef struct {
-  struct jpeg_decomp_master pub;  /* public fields */
+  struct jpeg_decomp_master pub;       /* public fields */
 
-  int pass_number;                /* # of passes completed */
+  int pass_number;                     /* # of passes completed */
 
-  boolean using_merged_upsample;  /* TRUE if using merged upsample/cconvert */
+  boolean using_merged_upsample;       /* TRUE if using merged upsample/cconvert */
 
   /* Saved references to initialized quantizer modules,
    * in case we need to switch modes.
@@ -66,7 +66,7 @@ use_merged_upsample (j_decompress_ptr cinfo)
       cinfo->comp_info[2].DCT_scaled_size != cinfo->min_DCT_scaled_size)
     return FALSE;
   /* ??? also need to test for upsample-time rescaling, when & if supported */
-  return TRUE;                    /* by golly, it'll work... */
+  return TRUE;                         /* by golly, it'll work... */
 #else
   return FALSE;
 #endif
@@ -157,7 +157,7 @@ jpeg_calc_output_dimensions (j_decompress_ptr cinfo)
                     (long) (cinfo->max_v_samp_factor * DCTSIZE));
   }
 
-#else                             /* !IDCT_SCALING_SUPPORTED */
+#else                                  /* !IDCT_SCALING_SUPPORTED */
 
   /* Hardwire it to "no scaling" */
   cinfo->output_width = cinfo->image_width;
@@ -166,7 +166,7 @@ jpeg_calc_output_dimensions (j_decompress_ptr cinfo)
    * and has computed unscaled downsampled_width and downsampled_height.
    */
 
-#endif                            /* IDCT_SCALING_SUPPORTED */
+#endif                                 /* IDCT_SCALING_SUPPORTED */
 
   /* Report number of components in selected colorspace. */
   /* Probably this should be in the color conversion module... */
@@ -178,7 +178,7 @@ jpeg_calc_output_dimensions (j_decompress_ptr cinfo)
 #if RGB_PIXELSIZE != 3
     cinfo->out_color_components = RGB_PIXELSIZE;
     break;
-#endif                            /* else share code with YCbCr */
+#endif                                 /* else share code with YCbCr */
   case JCS_YCbCr:
     cinfo->out_color_components = 3;
     break;
@@ -186,7 +186,7 @@ jpeg_calc_output_dimensions (j_decompress_ptr cinfo)
   case JCS_YCCK:
     cinfo->out_color_components = 4;
     break;
-  default:                        /* else must be same colorspace as in file */
+  default:                             /* else must be same colorspace as in file */
     cinfo->out_color_components = cinfo->num_components;
     break;
   }
@@ -254,14 +254,14 @@ prepare_range_limit_table (j_decompress_ptr cinfo)
   table = (JSAMPLE *)
     (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_IMAGE,
                 (5 * (MAXJSAMPLE+1) + CENTERJSAMPLE) * SIZEOF(JSAMPLE));
-  table += (MAXJSAMPLE+1);        /* allow negative subscripts of simple table */
+  table += (MAXJSAMPLE+1);             /* allow negative subscripts of simple table */
   cinfo->sample_range_limit = table;
   /* First segment of "simple" table: limit[x] = 0 for x < 0 */
   MEMZERO(table - (MAXJSAMPLE+1), (MAXJSAMPLE+1) * SIZEOF(JSAMPLE));
   /* Main part of "simple" table: limit[x] = x */
   for (i = 0; i <= MAXJSAMPLE; i++)
     table[i] = (JSAMPLE) i;
-  table += CENTERJSAMPLE;         /* Point to where post-IDCT table starts */
+  table += CENTERJSAMPLE;              /* Point to where post-IDCT table starts */
   /* End of simple table, rest of first half of post-IDCT table */
   for (i = CENTERJSAMPLE; i < 2*(MAXJSAMPLE+1); i++)
     table[i] = MAXJSAMPLE;
@@ -359,7 +359,7 @@ master_selection (j_decompress_ptr cinfo)
   if (! cinfo->raw_data_out) {
     if (master->using_merged_upsample) {
 #ifdef UPSAMPLE_MERGING_SUPPORTED
-      jinit_merged_upsampler(cinfo); /* does color conversion too */
+      jinit_merged_upsampler(cinfo);   /* does color conversion too */
 #else
       ERREXIT(cinfo, JERR_NOT_COMPILED);
 #endif
@@ -421,7 +421,7 @@ master_selection (j_decompress_ptr cinfo)
     /* Count the input pass as done */
     master->pass_number++;
   }
-#endif                            /* D_MULTISCAN_FILES_SUPPORTED */
+#endif                                 /* D_MULTISCAN_FILES_SUPPORTED */
 }
 
 
@@ -448,7 +448,7 @@ prepare_for_output_pass (j_decompress_ptr cinfo)
     (*cinfo->main->start_pass) (cinfo, JBUF_CRANK_DEST);
 #else
     ERREXIT(cinfo, JERR_NOT_COMPILED);
-#endif                            /* QUANT_2PASS_SUPPORTED */
+#endif                                 /* QUANT_2PASS_SUPPORTED */
   } else {
     if (cinfo->quantize_colors && cinfo->colormap == NULL) {
       /* Select new quantization method */
@@ -531,7 +531,7 @@ jpeg_new_colormap (j_decompress_ptr cinfo)
     ERREXIT(cinfo, JERR_MODE_CHANGE);
 }
 
-#endif                            /* D_MULTISCAN_FILES_SUPPORTED */
+#endif                                 /* D_MULTISCAN_FILES_SUPPORTED */
 
 
 /*

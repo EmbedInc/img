@@ -4,7 +4,7 @@
 }
 module img_open_read_filt;
 define img_open_read_filt;
-%include '/cognivision_links/dsee_libs/img/img2.ins.pas';
+%include 'img2.ins.pas';
 
 procedure img_open_read_filt (         {open a filter connection for read}
   in      img_old: img_conn_t;         {image stream filter will use as input}

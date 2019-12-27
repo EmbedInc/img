@@ -25,8 +25,8 @@
 /* Derived data constructed for each Huffman table */
 
 typedef struct {
-  unsigned int ehufco[256];       /* code for each symbol */
-  char ehufsi[256];               /* length of code for each symbol */
+  unsigned int ehufco[256];            /* code for each symbol */
+  char ehufsi[256];                    /* length of code for each symbol */
   /* If no code has been allocated for a symbol S, ehufsi[S] contains 0 */
 } c_derived_tbl;
 
@@ -35,7 +35,7 @@ typedef struct {
 #ifdef NEED_SHORT_EXTERNAL_NAMES
 #define jpeg_make_c_derived_tbl jMkCDerived
 #define jpeg_gen_optimal_table  jGenOptTbl
-#endif                            /* NEED_SHORT_EXTERNAL_NAMES */
+#endif                                 /* NEED_SHORT_EXTERNAL_NAMES */
 
 /* Expand a Huffman table definition into the derived format */
 EXTERN(void) jpeg_make_c_derived_tbl

@@ -26,12 +26,12 @@
 /* Private buffer controller object */
 
 typedef struct {
-  struct jpeg_c_main_controller pub; /* public fields */
+  struct jpeg_c_main_controller pub;   /* public fields */
 
-  JDIMENSION cur_iMCU_row;        /* number of current iMCU row */
-  JDIMENSION rowgroup_ctr;        /* counts row groups received in iMCU row */
-  boolean suspended;              /* remember if we suspended output */
-  J_BUF_MODE pass_mode;           /* current operating mode */
+  JDIMENSION cur_iMCU_row;             /* number of current iMCU row */
+  JDIMENSION rowgroup_ctr;             /* counts row groups received in iMCU row */
+  boolean suspended;                   /* remember if we suspended output */
+  J_BUF_MODE pass_mode;                /* current operating mode */
 
   /* If using just a strip buffer, this points to the entire set of buffers
    * (we allocate one for each component).  In the full-image case, this
@@ -74,10 +74,10 @@ start_pass_main (j_compress_ptr cinfo, J_BUF_MODE pass_mode)
   if (cinfo->raw_data_in)
     return;
 
-  main->cur_iMCU_row = 0;         /* initialize counters */
+  main->cur_iMCU_row = 0;              /* initialize counters */
   main->rowgroup_ctr = 0;
   main->suspended = FALSE;
-  main->pass_mode = pass_mode;    /* save mode for use by process_data */
+  main->pass_mode = pass_mode;         /* save mode for use by process_data */
 
   switch (pass_mode) {
   case JBUF_PASS_THRU:
@@ -234,7 +234,7 @@ process_data_buffer_main (j_compress_ptr cinfo,
   }
 }
 
-#endif                            /* FULL_MAIN_BUFFER_SUPPORTED */
+#endif                                 /* FULL_MAIN_BUFFER_SUPPORTED */
 
 
 /*
@@ -279,7 +279,7 @@ jinit_c_main_controller (j_compress_ptr cinfo, boolean need_full_buffer)
 #endif
   } else {
 #ifdef FULL_MAIN_BUFFER_SUPPORTED
-    main->whole_image[0] = NULL;  /* flag for no virtual arrays */
+    main->whole_image[0] = NULL;       /* flag for no virtual arrays */
 #endif
     /* Allocate a strip buffer for each component */
     for (ci = 0, compptr = cinfo->comp_info; ci < cinfo->num_components;

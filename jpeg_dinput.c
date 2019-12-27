@@ -19,9 +19,9 @@
 /* Private state */
 
 typedef struct {
-  struct jpeg_input_controller pub; /* public fields */
+  struct jpeg_input_controller pub;    /* public fields */
 
-  boolean inheaders;              /* TRUE until first SOS is reached */
+  boolean inheaders;                   /* TRUE until first SOS is reached */
 } my_input_controller;
 
 typedef my_input_controller * my_inputctl_ptr;
@@ -290,29 +290,29 @@ consume_markers (j_decompress_ptr cinfo)
   my_inputctl_ptr inputctl = (my_inputctl_ptr) cinfo->inputctl;
   int val;
 
-  if (inputctl->pub.eoi_reached)  /* After hitting EOI, read no further */
+  if (inputctl->pub.eoi_reached)       /* After hitting EOI, read no further */
     return JPEG_REACHED_EOI;
 
   val = (*cinfo->marker->read_markers) (cinfo);
 
   switch (val) {
-  case JPEG_REACHED_SOS:          /* Found SOS */
-    if (inputctl->inheaders) {    /* 1st SOS */
+  case JPEG_REACHED_SOS:               /* Found SOS */
+    if (inputctl->inheaders) {         /* 1st SOS */
       initial_setup(cinfo);
       inputctl->inheaders = FALSE;
       /* Note: start_input_pass must be called by jdmaster.c
        * before any more input can be consumed.  jdapimin.c is
        * responsible for enforcing this sequencing.
        */
-    } else {                      /* 2nd or later SOS marker */
+    } else {                           /* 2nd or later SOS marker */
       if (! inputctl->pub.has_multiple_scans)
         ERREXIT(cinfo, JERR_EOI_EXPECTED); /* Oops, I wasn't expecting this! */
       start_input_pass(cinfo);
     }
     break;
-  case JPEG_REACHED_EOI:          /* Found EOI */
+  case JPEG_REACHED_EOI:               /* Found EOI */
     inputctl->pub.eoi_reached = TRUE;
-    if (inputctl->inheaders) {    /* Tables-only datastream, apparently */
+    if (inputctl->inheaders) {         /* Tables-only datastream, apparently */
       if (cinfo->marker->saw_SOF)
         ERREXIT(cinfo, JERR_SOF_NO_SOS);
     } else {

@@ -6,7 +6,7 @@
 }
 module img_write_scan1;
 define img_write_scan1;
-%include '/cognivision_links/dsee_libs/img/img2.ins.pas';
+%include 'img2.ins.pas';
 
 procedure img_write_scan1 (            {write next scan line given format 1 pixels}
   in out  img: img_conn_t;             {handle to this image data stream}

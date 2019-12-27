@@ -12,7 +12,7 @@
 }
 module img_list_types;
 define img_list_types;
-%include '/cognivision_links/dsee_libs/img/img2.ins.pas';
+%include 'img2.ins.pas';
 
 procedure img_list_types (             {get list of supported image file types}
   in      rw: file_rw_t;               {read/write mode asking about}

@@ -1,7 +1,7 @@
 module img_read_scan2_scan1;
 define img_read_scan2_scan1;
 define img_alloc_scan1;
-%include '/cognivision_links/dsee_libs/img/img2.ins.pas';
+%include 'img2.ins.pas';
 {
 *****************************************************************************
 *

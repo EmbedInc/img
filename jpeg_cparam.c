@@ -49,9 +49,9 @@ jpeg_add_quant_table (j_compress_ptr cinfo, int which_tbl,
     temp = ((long) basic_table[i] * scale_factor + 50L) / 100L;
     /* limit the values to the valid range */
     if (temp <= 0L) temp = 1L;
-    if (temp > 32767L) temp = 32767L; /* max quantizer needed for 12 bits */
+    if (temp > 32767L) temp = 32767L;  /* max quantizer needed for 12 bits */
     if (force_baseline && temp > 255L)
-      temp = 255L;                /* limit to baseline range if requested */
+      temp = 255L;                     /* limit to baseline range if requested */
     (*qtblptr)->quantval[i] = (UINT16) temp;
   }
 
@@ -184,17 +184,17 @@ std_huff_tables (j_compress_ptr cinfo)
 /* IMPORTANT: these are only valid for 8-bit data precision! */
 {
   static const UINT8 bits_dc_luminance[17] =
-    {                             /* 0-base */ 0, 0, 1, 5, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 };
+    {                                  /* 0-base */ 0, 0, 1, 5, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 };
   static const UINT8 val_dc_luminance[] =
     { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
 
   static const UINT8 bits_dc_chrominance[17] =
-    {                             /* 0-base */ 0, 0, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 };
+    {                                  /* 0-base */ 0, 0, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 };
   static const UINT8 val_dc_chrominance[] =
     { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
 
   static const UINT8 bits_ac_luminance[17] =
-    {                             /* 0-base */ 0, 0, 2, 1, 3, 3, 2, 4, 3, 5, 5, 4, 4, 0, 0, 1, 0x7d };
+    {                                  /* 0-base */ 0, 0, 2, 1, 3, 3, 2, 4, 3, 5, 5, 4, 4, 0, 0, 1, 0x7d };
   static const UINT8 val_ac_luminance[] =
     { 0x01, 0x02, 0x03, 0x00, 0x04, 0x11, 0x05, 0x12,
       0x21, 0x31, 0x41, 0x06, 0x13, 0x51, 0x61, 0x07,
@@ -219,7 +219,7 @@ std_huff_tables (j_compress_ptr cinfo)
       0xf9, 0xfa };
 
   static const UINT8 bits_ac_chrominance[17] =
-    {                             /* 0-base */ 0, 0, 2, 1, 2, 4, 4, 3, 4, 7, 5, 4, 4, 0, 1, 2, 0x77 };
+    {                                  /* 0-base */ 0, 0, 2, 1, 2, 4, 4, 3, 4, 7, 5, 4, 4, 0, 1, 2, 0x77 };
   static const UINT8 val_ac_chrominance[] =
     { 0x00, 0x01, 0x02, 0x03, 0x11, 0x04, 0x05, 0x21,
       0x31, 0x06, 0x12, 0x41, 0x51, 0x07, 0x61, 0x71,
@@ -339,10 +339,10 @@ jpeg_set_defaults (j_compress_ptr cinfo)
    * to 1.02, but there may still be some decoders in use that will complain
    * about that; saying 1.01 should minimize compatibility problems.
    */
-  cinfo->JFIF_major_version = 1;  /* Default JFIF version = 1.01 */
+  cinfo->JFIF_major_version = 1;       /* Default JFIF version = 1.01 */
   cinfo->JFIF_minor_version = 1;
-  cinfo->density_unit = 0;        /* Pixel size is unknown by default */
-  cinfo->X_density = 1;           /* Pixel aspect ratio is square by default */
+  cinfo->density_unit = 0;             /* Pixel size is unknown by default */
+  cinfo->X_density = 1;                /* Pixel aspect ratio is square by default */
   cinfo->Y_density = 1;
 
   /* Choose JPEG colorspace based on input space, set defaults accordingly */
@@ -412,25 +412,25 @@ jpeg_set_colorspace (j_compress_ptr cinfo, J_COLOR_SPACE colorspace)
 
   cinfo->jpeg_color_space = colorspace;
 
-  cinfo->write_JFIF_header = FALSE; /* No marker for non-JFIF colorspaces */
-  cinfo->write_Adobe_marker = FALSE; /* write no Adobe marker by default */
+  cinfo->write_JFIF_header = FALSE;    /* No marker for non-JFIF colorspaces */
+  cinfo->write_Adobe_marker = FALSE;   /* write no Adobe marker by default */
 
   switch (colorspace) {
   case JCS_GRAYSCALE:
-    cinfo->write_JFIF_header = TRUE; /* Write a JFIF marker */
+    cinfo->write_JFIF_header = TRUE;   /* Write a JFIF marker */
     cinfo->num_components = 1;
     /* JFIF specifies component ID 1 */
     SET_COMP(0, 1, 1, 1, 0, 0, 0);
     break;
   case JCS_RGB:
-    cinfo->write_Adobe_marker = TRUE; /* write Adobe marker to flag RGB */
+    cinfo->write_Adobe_marker = TRUE;  /* write Adobe marker to flag RGB */
     cinfo->num_components = 3;
-    SET_COMP(0, 0x52              /* 'R' */, 1, 1, 0, 0, 0);
-    SET_COMP(1, 0x47              /* 'G' */, 1, 1, 0, 0, 0);
-    SET_COMP(2, 0x42              /* 'B' */, 1, 1, 0, 0, 0);
+    SET_COMP(0, 0x52                   /* 'R' */, 1, 1, 0, 0, 0);
+    SET_COMP(1, 0x47                   /* 'G' */, 1, 1, 0, 0, 0);
+    SET_COMP(2, 0x42                   /* 'B' */, 1, 1, 0, 0, 0);
     break;
   case JCS_YCbCr:
-    cinfo->write_JFIF_header = TRUE; /* Write a JFIF marker */
+    cinfo->write_JFIF_header = TRUE;   /* Write a JFIF marker */
     cinfo->num_components = 3;
     /* JFIF specifies component IDs 1,2,3 */
     /* We default to 2x2 subsamples of chrominance */
@@ -439,15 +439,15 @@ jpeg_set_colorspace (j_compress_ptr cinfo, J_COLOR_SPACE colorspace)
     SET_COMP(2, 3, 1, 1, 1, 1, 1);
     break;
   case JCS_CMYK:
-    cinfo->write_Adobe_marker = TRUE; /* write Adobe marker to flag CMYK */
+    cinfo->write_Adobe_marker = TRUE;  /* write Adobe marker to flag CMYK */
     cinfo->num_components = 4;
-    SET_COMP(0, 0x43              /* 'C' */, 1, 1, 0, 0, 0);
-    SET_COMP(1, 0x4D              /* 'M' */, 1, 1, 0, 0, 0);
-    SET_COMP(2, 0x59              /* 'Y' */, 1, 1, 0, 0, 0);
-    SET_COMP(3, 0x4B              /* 'K' */, 1, 1, 0, 0, 0);
+    SET_COMP(0, 0x43                   /* 'C' */, 1, 1, 0, 0, 0);
+    SET_COMP(1, 0x4D                   /* 'M' */, 1, 1, 0, 0, 0);
+    SET_COMP(2, 0x59                   /* 'Y' */, 1, 1, 0, 0, 0);
+    SET_COMP(3, 0x4B                   /* 'K' */, 1, 1, 0, 0, 0);
     break;
   case JCS_YCCK:
-    cinfo->write_Adobe_marker = TRUE; /* write Adobe marker to flag YCCK */
+    cinfo->write_Adobe_marker = TRUE;  /* write Adobe marker to flag YCCK */
     cinfo->num_components = 4;
     SET_COMP(0, 1, 2, 2, 0, 0, 0);
     SET_COMP(1, 2, 1, 1, 1, 1, 1);
@@ -551,9 +551,9 @@ jpeg_simple_progression (j_compress_ptr cinfo)
   } else {
     /* All-purpose script for other color spaces. */
     if (ncomps > MAX_COMPS_IN_SCAN)
-      nscans = 6 * ncomps;        /* 2 DC + 4 AC scans per component */
+      nscans = 6 * ncomps;             /* 2 DC + 4 AC scans per component */
     else
-      nscans = 2 + 4 * ncomps;    /* 2 DC scans; 4 AC scans per component */
+      nscans = 2 + 4 * ncomps;         /* 2 DC scans; 4 AC scans per component */
   }
 
   /* Allocate space for script.
@@ -607,4 +607,4 @@ jpeg_simple_progression (j_compress_ptr cinfo)
   }
 }
 
-#endif                            /* C_PROGRESSIVE_SUPPORTED */
+#endif                                 /* C_PROGRESSIVE_SUPPORTED */

@@ -3,7 +3,7 @@
 module img_driver_img;
 define img_d_img_open_read;
 define img_d_img_open_write;
-%include '/cognivision_links/dsee_libs/img/img2.ins.pas';
+%include 'img2.ins.pas';
 
 const
   in_buf_runs = 2048;                  {number of runs to read from file at a time}

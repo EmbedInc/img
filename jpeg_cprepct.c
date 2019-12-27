@@ -51,19 +51,19 @@
 /* Private buffer controller object */
 
 typedef struct {
-  struct jpeg_c_prep_controller pub; /* public fields */
+  struct jpeg_c_prep_controller pub;   /* public fields */
 
   /* Downsampling input buffer.  This buffer holds color-converted data
    * until we have enough to do a downsample step.
    */
   JSAMPARRAY color_buf[MAX_COMPONENTS];
 
-  JDIMENSION rows_to_go;          /* counts rows remaining in source image */
-  int next_buf_row;               /* index of next row to store in color_buf */
+  JDIMENSION rows_to_go;               /* counts rows remaining in source image */
+  int next_buf_row;                    /* index of next row to store in color_buf */
 
-#ifdef CONTEXT_ROWS_SUPPORTED     /* only needed for context case */
-  int this_row_group;             /* starting row index of group to process */
-  int next_buf_stop;              /* downsample when we reach this index */
+#ifdef CONTEXT_ROWS_SUPPORTED          /* only needed for context case */
+  int this_row_group;                  /* starting row index of group to process */
+  int next_buf_stop;                   /* downsample when we reach this index */
 #endif
 } my_prep_controller;
 
@@ -179,7 +179,7 @@ pre_process_data (j_compress_ptr cinfo,
                            (int) (out_row_groups_avail * compptr->v_samp_factor));
       }
       *out_row_group_ctr = out_row_groups_avail;
-      break;                      /* can exit outer loop without test */
+      break;                           /* can exit outer loop without test */
     }
   }
 }
@@ -300,11 +300,11 @@ create_context_buffer (j_compress_ptr cinfo)
       fake_buffer[4 * rgroup_height + i] = true_buffer[i];
     }
     prep->color_buf[ci] = fake_buffer + rgroup_height;
-    fake_buffer += 5 * rgroup_height; /* point to space for next component */
+    fake_buffer += 5 * rgroup_height;  /* point to space for next component */
   }
 }
 
-#endif                            /* CONTEXT_ROWS_SUPPORTED */
+#endif                                 /* CONTEXT_ROWS_SUPPORTED */
 
 
 /*
@@ -318,7 +318,7 @@ jinit_c_prep_controller (j_compress_ptr cinfo, boolean need_full_buffer)
   int ci;
   jpeg_component_info * compptr;
 
-  if (need_full_buffer)           /* safety check */
+  if (need_full_buffer)                /* safety check */
     ERREXIT(cinfo, JERR_BAD_BUFFER_MODE);
 
   prep = (my_prep_ptr)

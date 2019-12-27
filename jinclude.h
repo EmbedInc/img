@@ -17,8 +17,8 @@
 
 /* Include auto-config file to find out which system include files we need. */
 
-#include "jconfig.h"              /* auto configuration options */
-#define JCONFIG_INCLUDED          /* so that jpeglib.h doesn't do it again */
+#include "jconfig.h"                   /* auto configuration options */
+#define JCONFIG_INCLUDED               /* so that jpeglib.h doesn't do it again */
 
 /*
  * We need the NULL macro and size_t typedef.
@@ -61,7 +61,7 @@
 #define MEMZERO(target, size)    bzero((void *)(target), (size_t)(size))
 #define MEMCOPY(dest, src, size)  bcopy((const void *)(src), (void *)(dest), (size_t)(size))
 
-#else                             /* not BSD, assume ANSI/SysV string lib */
+#else                                  /* not BSD, assume ANSI/SysV string lib */
 
 #include <string.h>
 #define MEMZERO(target, size)    memset((void *)(target), 0, (size_t)(size))

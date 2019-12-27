@@ -23,7 +23,7 @@
 #define JPEG_INTERNALS
 #include "jinclude.h"
 #include "jpeglib.h"
-#include "jdct.h"                 /* Private declarations for DCT subsystem */
+#include "jdct.h"                      /* Private declarations for DCT subsystem */
 
 #ifdef IDCT_SCALING_SUPPORTED
 
@@ -44,7 +44,7 @@
 #define PASS1_BITS  2
 #else
 #define CONST_BITS  13
-#define PASS1_BITS  1             /* lose a little precision to avoid overflow */
+#define PASS1_BITS  1                  /* lose a little precision to avoid overflow */
 #endif
 
 /* Some C compilers fail to reduce "FIX(constant)" at compile time, thus
@@ -127,7 +127,7 @@ jpeg_idct_4x4 (j_decompress_ptr cinfo, jpeg_component_info * compptr,
   JSAMPROW outptr;
   JSAMPLE *range_limit = IDCT_range_limit(cinfo);
   int ctr;
-  int workspace[DCTSIZE*4];       /* buffers data between passes */
+  int workspace[DCTSIZE*4];            /* buffers data between passes */
   SHIFT_TEMPS
 
   /* Pass 1: process columns from input, store into work array. */
@@ -210,7 +210,7 @@ jpeg_idct_4x4 (j_decompress_ptr cinfo, jpeg_component_info * compptr,
       outptr[2] = dcval;
       outptr[3] = dcval;
 
-      wsptr += DCTSIZE;           /* advance pointer to next row */
+      wsptr += DCTSIZE;                /* advance pointer to next row */
       continue;
     }
 #endif
@@ -257,7 +257,7 @@ jpeg_idct_4x4 (j_decompress_ptr cinfo, jpeg_component_info * compptr,
                                           CONST_BITS+PASS1_BITS+3+1)
                             & RANGE_MASK];
 
-    wsptr += DCTSIZE;             /* advance pointer to next row */
+    wsptr += DCTSIZE;                  /* advance pointer to next row */
   }
 }
 
@@ -279,7 +279,7 @@ jpeg_idct_2x2 (j_decompress_ptr cinfo, jpeg_component_info * compptr,
   JSAMPROW outptr;
   JSAMPLE *range_limit = IDCT_range_limit(cinfo);
   int ctr;
-  int workspace[DCTSIZE*2];       /* buffers data between passes */
+  int workspace[DCTSIZE*2];            /* buffers data between passes */
   SHIFT_TEMPS
 
   /* Pass 1: process columns from input, store into work array. */
@@ -340,7 +340,7 @@ jpeg_idct_2x2 (j_decompress_ptr cinfo, jpeg_component_info * compptr,
       outptr[0] = dcval;
       outptr[1] = dcval;
 
-      wsptr += DCTSIZE;           /* advance pointer to next row */
+      wsptr += DCTSIZE;                /* advance pointer to next row */
       continue;
     }
 #endif
@@ -365,7 +365,7 @@ jpeg_idct_2x2 (j_decompress_ptr cinfo, jpeg_component_info * compptr,
                                           CONST_BITS+PASS1_BITS+3+2)
                             & RANGE_MASK];
 
-    wsptr += DCTSIZE;             /* advance pointer to next row */
+    wsptr += DCTSIZE;                  /* advance pointer to next row */
   }
 }
 
@@ -395,4 +395,4 @@ jpeg_idct_1x1 (j_decompress_ptr cinfo, jpeg_component_info * compptr,
   output_buf[0][output_col] = range_limit[dcval & RANGE_MASK];
 }
 
-#endif                            /* IDCT_SCALING_SUPPORTED */
+#endif                                 /* IDCT_SCALING_SUPPORTED */

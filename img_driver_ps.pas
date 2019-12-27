@@ -5,7 +5,7 @@ module img_driver_ps;
 define img_d_ps_open_write;
 define img_d_ps_write_scan1;
 define img_d_ps_close_write;
-%include '/cognivision_links/dsee_libs/img/img2.ins.pas';
+%include 'img2.ins.pas';
 {
 *   Declare globally visible entry points that are defined here but not declared
 *   in any include file.

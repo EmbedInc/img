@@ -102,7 +102,7 @@
  * which is the normal and rational definition.
  */
 #undef RIGHT_SHIFT_IS_UNSIGNED
-#endif                            /* JPEG_INTERNALS */
+#endif                                 /* JPEG_INTERNALS */
 
 /*
  * The remaining options do not affect the JPEG library proper,
@@ -114,11 +114,11 @@
 
 /* These defines indicate which image (non-JPEG) file formats are allowed. */
 
-#define BMP_SUPPORTED             /* BMP image file format */
-#define GIF_SUPPORTED             /* GIF image file format */
-#define PPM_SUPPORTED             /* PBMPLUS PPM/PGM image file format */
-#undef RLE_SUPPORTED              /* Utah RLE image file format */
-#define TARGA_SUPPORTED           /* Targa image file format */
+#define BMP_SUPPORTED                  /* BMP image file format */
+#define GIF_SUPPORTED                  /* GIF image file format */
+#define PPM_SUPPORTED                  /* PBMPLUS PPM/PGM image file format */
+#undef RLE_SUPPORTED                   /* Utah RLE image file format */
+#define TARGA_SUPPORTED                /* Targa image file format */
 
 /* Define this if you want to name both input and output files on the command
  * line, rather than using stdout and optionally stdin.  You MUST do this if
@@ -145,4 +145,4 @@
 #undef PROGRESS_REPORT
 
 
-#endif                            /* JPEG_CJPEG_DJPEG */
+#endif                                 /* JPEG_CJPEG_DJPEG */

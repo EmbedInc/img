@@ -26,7 +26,7 @@
 #define JPEG_INTERNALS
 #include "jinclude.h"
 #include "jpeglib.h"
-#include "jdct.h"                 /* Private declarations for DCT subsystem */
+#include "jdct.h"                      /* Private declarations for DCT subsystem */
 
 #ifdef DCT_ISLOW_SUPPORTED
 
@@ -79,7 +79,7 @@
 #define PASS1_BITS  2
 #else
 #define CONST_BITS  13
-#define PASS1_BITS  1             /* lose a little precision to avoid overflow */
+#define PASS1_BITS  1                  /* lose a little precision to avoid overflow */
 #endif
 
 /* Some C compilers fail to reduce "FIX(constant)" at compile time, thus
@@ -207,7 +207,7 @@ jpeg_fdct_islow (DCTELEM * data)
     dataptr[3] = (DCTELEM) DESCALE(tmp6 + z2 + z3, CONST_BITS-PASS1_BITS);
     dataptr[1] = (DCTELEM) DESCALE(tmp7 + z1 + z4, CONST_BITS-PASS1_BITS);
 
-    dataptr += DCTSIZE;           /* advance pointer to next row */
+    dataptr += DCTSIZE;                /* advance pointer to next row */
   }
 
   /* Pass 2: process columns.
@@ -276,8 +276,8 @@ jpeg_fdct_islow (DCTELEM * data)
     dataptr[DCTSIZE*1] = (DCTELEM) DESCALE(tmp7 + z1 + z4,
                                            CONST_BITS+PASS1_BITS);
 
-    dataptr++;                    /* advance pointer to next column */
+    dataptr++;                         /* advance pointer to next column */
   }
 }
 
-#endif                            /* DCT_ISLOW_SUPPORTED */
+#endif                                 /* DCT_ISLOW_SUPPORTED */

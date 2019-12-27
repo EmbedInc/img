@@ -17,7 +17,7 @@
 #define JPEG_INTERNALS
 #include "jinclude.h"
 #include "jpeglib.h"
-#include "jchuff.h"               /* Declarations shared with jcphuff.c */
+#include "jchuff.h"                    /* Declarations shared with jcphuff.c */
 
 
 /* Expanded entropy encoder object for Huffman encoding.
@@ -27,9 +27,9 @@
  */
 
 typedef struct {
-  INT32 put_buffer;               /* current bit-accumulation buffer */
-  int put_bits;                   /* # of bits now in it */
-  int last_dc_val[MAX_COMPS_IN_SCAN]; /* last DC coef for each component */
+  INT32 put_buffer;                    /* current bit-accumulation buffer */
+  int put_bits;                        /* # of bits now in it */
+  int last_dc_val[MAX_COMPS_IN_SCAN];  /* last DC coef for each component */
 } savable_state;
 
 /* This macro is to work around compilers with missing or broken
@@ -53,19 +53,19 @@ typedef struct {
 
 
 typedef struct {
-  struct jpeg_entropy_encoder pub; /* public fields */
+  struct jpeg_entropy_encoder pub;     /* public fields */
 
-  savable_state saved;            /* Bit buffer & DC state at start of MCU */
+  savable_state saved;                 /* Bit buffer & DC state at start of MCU */
 
   /* These fields are NOT loaded into local working state. */
-  unsigned int restarts_to_go;    /* MCUs left in this restart interval */
-  int next_restart_num;           /* next restart number to write (0-7) */
+  unsigned int restarts_to_go;         /* MCUs left in this restart interval */
+  int next_restart_num;                /* next restart number to write (0-7) */
 
   /* Pointers to derived tables (these workspaces have image lifespan) */
   c_derived_tbl * dc_derived_tbls[NUM_HUFF_TBLS];
   c_derived_tbl * ac_derived_tbls[NUM_HUFF_TBLS];
 
-#ifdef ENTROPY_OPT_SUPPORTED      /* Statistics tables for optimization */
+#ifdef ENTROPY_OPT_SUPPORTED           /* Statistics tables for optimization */
   long * dc_count_ptrs[NUM_HUFF_TBLS];
   long * ac_count_ptrs[NUM_HUFF_TBLS];
 #endif
@@ -78,10 +78,10 @@ typedef huff_entropy_encoder * huff_entropy_ptr;
  */
 
 typedef struct {
-  JOCTET * next_output_byte;      /* => next byte to write in buffer */
-  size_t free_in_buffer;          /* # of byte spaces remaining in buffer */
-  savable_state cur;              /* Current bit buffer & DC state */
-  j_compress_ptr cinfo;           /* dump_buffer needs access to this */
+  JOCTET * next_output_byte;           /* => next byte to write in buffer */
+  size_t free_in_buffer;               /* # of byte spaces remaining in buffer */
+  savable_state cur;                   /* Current bit buffer & DC state */
+  j_compress_ptr cinfo;                /* dump_buffer needs access to this */
 } working_state;
 
 
@@ -210,7 +210,7 @@ jpeg_make_c_derived_tbl (j_compress_ptr cinfo, boolean isDC, int tblno,
   p = 0;
   for (l = 1; l <= 16; l++) {
     i = (int) htbl->bits[l];
-    if (i < 0 || p + i > 256)     /* protect against table overrun */
+    if (i < 0 || p + i > 256)          /* protect against table overrun */
       ERREXIT(cinfo, JERR_BAD_HUFF_TABLE);
     while (i--)
       huffsize[p++] = (char) l;
@@ -312,9 +312,9 @@ emit_bits (working_state * state, unsigned int code, int size)
 
   put_buffer &= (((INT32) 1)<<size) - 1; /* mask off any extra bits in code */
 
-  put_bits += size;               /* new number of bits in buffer */
+  put_bits += size;                    /* new number of bits in buffer */
 
-  put_buffer <<= 24 - put_bits;   /* align incoming bits */
+  put_buffer <<= 24 - put_bits;        /* align incoming bits */
 
   put_buffer |= state->cur.put_buffer; /* and merge with old buffer contents */
 
@@ -322,14 +322,14 @@ emit_bits (working_state * state, unsigned int code, int size)
     int c = (int) ((put_buffer >> 16) & 0xFF);
 
     emit_byte(state, c, return FALSE);
-    if (c == 0xFF) {              /* need to stuff a zero byte? */
+    if (c == 0xFF) {                   /* need to stuff a zero byte? */
       emit_byte(state, 0, return FALSE);
     }
     put_buffer <<= 8;
     put_bits -= 8;
   }
 
-  state->cur.put_buffer = put_buffer; /* update state variables */
+  state->cur.put_buffer = put_buffer;  /* update state variables */
   state->cur.put_bits = put_bits;
 
   return TRUE;
@@ -339,9 +339,9 @@ emit_bits (working_state * state, unsigned int code, int size)
 LOCAL(boolean)
 flush_bits (working_state * state)
 {
-  if (! emit_bits(state, 0x7F, 7)) /* fill any partial byte with ones */
+  if (! emit_bits(state, 0x7F, 7))     /* fill any partial byte with ones */
     return FALSE;
-  state->cur.put_buffer = 0;      /* and reset bit-buffer to empty */
+  state->cur.put_buffer = 0;           /* and reset bit-buffer to empty */
   state->cur.put_bits = 0;
   return TRUE;
 }
@@ -362,7 +362,7 @@ encode_one_block (working_state * state, JCOEFPTR block, int last_dc_val,
   temp = temp2 = block[0] - last_dc_val;
 
   if (temp < 0) {
-    temp = -temp;                 /* temp is abs value of input */
+    temp = -temp;                      /* temp is abs value of input */
     /* For a negative input, want temp2 = bitwise complement of abs(input) */
     /* This code assumes we are on a two's complement machine */
     temp2--;
@@ -386,13 +386,13 @@ encode_one_block (working_state * state, JCOEFPTR block, int last_dc_val,
 
   /* Emit that number of bits of the value, if positive, */
   /* or the complement of its magnitude, if negative. */
-  if (nbits)                      /* emit_bits rejects calls with size 0 */
+  if (nbits)                           /* emit_bits rejects calls with size 0 */
     if (! emit_bits(state, (unsigned int) temp2, nbits))
       return FALSE;
 
   /* Encode the AC coefficients per section F.1.2.2 */
 
-  r = 0;                          /* r = run length of zeros */
+  r = 0;                               /* r = run length of zeros */
 
   for (k = 1; k < DCTSIZE2; k++) {
     if ((temp = block[jpeg_natural_order[k]]) == 0) {
@@ -407,13 +407,13 @@ encode_one_block (working_state * state, JCOEFPTR block, int last_dc_val,
 
       temp2 = temp;
       if (temp < 0) {
-        temp = -temp;             /* temp is abs value of input */
+        temp = -temp;                  /* temp is abs value of input */
         /* This code assumes we are on a two's complement machine */
         temp2--;
       }
 
       /* Find the number of bits needed for the magnitude of the coefficient */
-      nbits = 1;                  /* there must be at least one 1 bit */
+      nbits = 1;                       /* there must be at least one 1 bit */
       while ((temp >>= 1))
         nbits++;
       /* Check for out-of-range coefficient values */
@@ -599,7 +599,7 @@ htest_one_block (j_compress_ptr cinfo, JCOEFPTR block, int last_dc_val,
 
   /* Encode the AC coefficients per section F.1.2.2 */
 
-  r = 0;                          /* r = run length of zeros */
+  r = 0;                               /* r = run length of zeros */
 
   for (k = 1; k < DCTSIZE2; k++) {
     if ((temp = block[jpeg_natural_order[k]]) == 0) {
@@ -616,7 +616,7 @@ htest_one_block (j_compress_ptr cinfo, JCOEFPTR block, int last_dc_val,
         temp = -temp;
 
       /* Find the number of bits needed for the magnitude of the coefficient */
-      nbits = 1;                  /* there must be at least one 1 bit */
+      nbits = 1;                       /* there must be at least one 1 bit */
       while ((temp >>= 1))
         nbits++;
       /* Check for out-of-range coefficient values */
@@ -704,10 +704,10 @@ encode_mcu_gather (j_compress_ptr cinfo, JBLOCKROW *MCU_data)
 GLOBAL(void)
 jpeg_gen_optimal_table (j_compress_ptr cinfo, JHUFF_TBL * htbl, long freq[])
 {
-#define MAX_CLEN 32               /* assumed maximum initial code length */
-  UINT8 bits[MAX_CLEN+1];         /* bits[k] = # of symbols with code length k */
-  int codesize[257];              /* codesize[k] = code length of symbol k */
-  int others[257];                /* next symbol in current branch of tree */
+#define MAX_CLEN 32                    /* assumed maximum initial code length */
+  UINT8 bits[MAX_CLEN+1];              /* bits[k] = # of symbols with code length k */
+  int codesize[257];                   /* codesize[k] = code length of symbol k */
+  int others[257];                     /* next symbol in current branch of tree */
   int c1, c2;
   int p, i, j;
   long v;
@@ -717,9 +717,9 @@ jpeg_gen_optimal_table (j_compress_ptr cinfo, JHUFF_TBL * htbl, long freq[])
   MEMZERO(bits, SIZEOF(bits));
   MEMZERO(codesize, SIZEOF(codesize));
   for (i = 0; i < 257; i++)
-    others[i] = -1;               /* init links to empty */
+    others[i] = -1;                    /* init links to empty */
 
-  freq[256] = 1;                  /* make sure 256 has a nonzero count */
+  freq[256] = 1;                       /* make sure 256 has a nonzero count */
   /* Including the pseudo-symbol 256 in the Huffman procedure guarantees
    * that no real symbol is given code-value of all ones, because 256
    * will be placed last in the largest codeword category.
@@ -765,7 +765,7 @@ jpeg_gen_optimal_table (j_compress_ptr cinfo, JHUFF_TBL * htbl, long freq[])
       codesize[c1]++;
     }
 
-    others[c1] = c2;              /* chain c2 onto c1's tree branch */
+    others[c1] = c2;                   /* chain c2 onto c1's tree branch */
 
     /* Increment the codesize of everything in c2's tree branch */
     codesize[c2]++;
@@ -800,19 +800,19 @@ jpeg_gen_optimal_table (j_compress_ptr cinfo, JHUFF_TBL * htbl, long freq[])
 
   for (i = MAX_CLEN; i > 16; i--) {
     while (bits[i] > 0) {
-      j = i - 2;                  /* find length of new prefix to be used */
+      j = i - 2;                       /* find length of new prefix to be used */
       while (bits[j] == 0)
         j--;
 
-      bits[i] -= 2;               /* remove two symbols */
-      bits[i-1]++;                /* one goes in this length */
-      bits[j+1] += 2;             /* two new symbols in this length */
-      bits[j]--;                  /* symbol of this length is now a prefix */
+      bits[i] -= 2;                    /* remove two symbols */
+      bits[i-1]++;                     /* one goes in this length */
+      bits[j+1] += 2;                  /* two new symbols in this length */
+      bits[j]--;                       /* symbol of this length is now a prefix */
     }
   }
 
   /* Remove the count for the pseudo-symbol 256 from the largest codelength */
-  while (bits[i] == 0)            /* find largest codelength still in use */
+  while (bits[i] == 0)                 /* find largest codelength still in use */
     i--;
   bits[i]--;
 
@@ -880,7 +880,7 @@ finish_pass_gather (j_compress_ptr cinfo)
 }
 
 
-#endif                            /* ENTROPY_OPT_SUPPORTED */
+#endif                                 /* ENTROPY_OPT_SUPPORTED */
 
 
 /*

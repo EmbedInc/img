@@ -27,9 +27,9 @@
  */
 
 #if BITS_IN_JSAMPLE == 8
-typedef int DCTELEM;              /* 16 or 32 bits is fine */
+typedef int DCTELEM;                   /* 16 or 32 bits is fine */
 #else
-typedef INT32 DCTELEM;            /* must have 32 bits */
+typedef INT32 DCTELEM;                 /* must have 32 bits */
 #endif
 
 typedef JMETHOD(void, forward_DCT_method_ptr, (DCTELEM * data));
@@ -53,15 +53,15 @@ typedef JMETHOD(void, float_DCT_method_ptr, (FAST_FLOAT * data));
  * Each IDCT routine has its own ideas about the best dct_table element type.
  */
 
-typedef MULTIPLIER ISLOW_MULT_TYPE; /* short or int, whichever is faster */
+typedef MULTIPLIER ISLOW_MULT_TYPE;    /* short or int, whichever is faster */
 #if BITS_IN_JSAMPLE == 8
-typedef MULTIPLIER IFAST_MULT_TYPE; /* 16 bits is OK, use short if faster */
-#define IFAST_SCALE_BITS  2       /* fractional bits in scale factors */
+typedef MULTIPLIER IFAST_MULT_TYPE;    /* 16 bits is OK, use short if faster */
+#define IFAST_SCALE_BITS  2            /* fractional bits in scale factors */
 #else
-typedef INT32 IFAST_MULT_TYPE;    /* need 32 bits for scaled quantizers */
-#define IFAST_SCALE_BITS  13      /* fractional bits in scale factors */
+typedef INT32 IFAST_MULT_TYPE;         /* need 32 bits for scaled quantizers */
+#define IFAST_SCALE_BITS  13           /* fractional bits in scale factors */
 #endif
-typedef FAST_FLOAT FLOAT_MULT_TYPE; /* preferred floating type */
+typedef FAST_FLOAT FLOAT_MULT_TYPE;    /* preferred floating type */
 
 
 /*
@@ -90,7 +90,7 @@ typedef FAST_FLOAT FLOAT_MULT_TYPE; /* preferred floating type */
 #define jpeg_idct_4x4           jRD4x4
 #define jpeg_idct_2x2           jRD2x2
 #define jpeg_idct_1x1           jRD1x1
-#endif                            /* NEED_SHORT_EXTERNAL_NAMES */
+#endif                                 /* NEED_SHORT_EXTERNAL_NAMES */
 
 /* Extern declarations for the forward and inverse DCT routines. */
 
@@ -154,23 +154,23 @@ EXTERN(void) jpeg_idct_1x1
  * correct combination of casts.
  */
 
-#ifdef SHORTxSHORT_32             /* may work if 'int' is 32 bits */
+#ifdef SHORTxSHORT_32                  /* may work if 'int' is 32 bits */
 #define MULTIPLY16C16(var, const)  (((INT16) (var)) * ((INT16) (const)))
 #endif
-#ifdef SHORTxLCONST_32            /* known to work with Microsoft C 6.0 */
+#ifdef SHORTxLCONST_32                 /* known to work with Microsoft C 6.0 */
 #define MULTIPLY16C16(var, const)  (((INT16) (var)) * ((INT32) (const)))
 #endif
 
-#ifndef MULTIPLY16C16             /* default definition */
+#ifndef MULTIPLY16C16                  /* default definition */
 #define MULTIPLY16C16(var, const)  ((var) * (const))
 #endif
 
 /* Same except both inputs are variables. */
 
-#ifdef SHORTxSHORT_32             /* may work if 'int' is 32 bits */
+#ifdef SHORTxSHORT_32                  /* may work if 'int' is 32 bits */
 #define MULTIPLY16V16(var1, var2)  (((INT16) (var1)) * ((INT16) (var2)))
 #endif
 
-#ifndef MULTIPLY16V16             /* default definition */
+#ifndef MULTIPLY16V16                  /* default definition */
 #define MULTIPLY16V16(var1, var2)  ((var1) * (var2))
 #endif

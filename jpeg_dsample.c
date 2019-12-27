@@ -31,7 +31,7 @@ typedef JMETHOD(void, upsample1_ptr,
 /* Private subobject */
 
 typedef struct {
-  struct jpeg_upsampler pub;      /* public fields */
+  struct jpeg_upsampler pub;           /* public fields */
 
   /* Color conversion buffer.  When using separate upsampling and color
    * conversion steps, this buffer holds one upsampled row group until it
@@ -45,8 +45,8 @@ typedef struct {
   /* Per-component upsampling method pointers */
   upsample1_ptr methods[MAX_COMPONENTS];
 
-  int next_row_out;               /* counts rows emitted from color_buf */
-  JDIMENSION rows_to_go;          /* counts rows remaining in image */
+  int next_row_out;                    /* counts rows emitted from color_buf */
+  JDIMENSION rows_to_go;               /* counts rows remaining in image */
 
   /* Height of an input row group for each component. */
   int rowgroup_height[MAX_COMPONENTS];
@@ -170,7 +170,7 @@ METHODDEF(void)
 noop_upsample (j_decompress_ptr cinfo, jpeg_component_info * compptr,
                JSAMPARRAY input_data, JSAMPARRAY * output_data_ptr)
 {
-  *output_data_ptr = NULL;        /* safety check */
+  *output_data_ptr = NULL;             /* safety check */
 }
 
 
@@ -208,7 +208,7 @@ int_upsample (j_decompress_ptr cinfo, jpeg_component_info * compptr,
     outptr = output_data[outrow];
     outend = outptr + cinfo->output_width;
     while (outptr < outend) {
-      invalue = *inptr++;         /* don't need GETJSAMPLE() here */
+      invalue = *inptr++;              /* don't need GETJSAMPLE() here */
       for (h = h_expand; h > 0; h--) {
         *outptr++ = invalue;
       }
@@ -244,7 +244,7 @@ h2v1_upsample (j_decompress_ptr cinfo, jpeg_component_info * compptr,
     outptr = output_data[inrow];
     outend = outptr + cinfo->output_width;
     while (outptr < outend) {
-      invalue = *inptr++;         /* don't need GETJSAMPLE() here */
+      invalue = *inptr++;              /* don't need GETJSAMPLE() here */
       *outptr++ = invalue;
       *outptr++ = invalue;
     }
@@ -273,7 +273,7 @@ h2v2_upsample (j_decompress_ptr cinfo, jpeg_component_info * compptr,
     outptr = output_data[outrow];
     outend = outptr + cinfo->output_width;
     while (outptr < outend) {
-      invalue = *inptr++;         /* don't need GETJSAMPLE() here */
+      invalue = *inptr++;              /* don't need GETJSAMPLE() here */
       *outptr++ = invalue;
       *outptr++ = invalue;
     }
@@ -360,9 +360,9 @@ h2v2_fancy_upsample (j_decompress_ptr cinfo, jpeg_component_info * compptr,
     for (v = 0; v < 2; v++) {
       /* inptr0 points to nearest input row, inptr1 points to next nearest */
       inptr0 = input_data[inrow];
-      if (v == 0)                 /* next nearest is row above */
+      if (v == 0)                      /* next nearest is row above */
         inptr1 = input_data[inrow-1];
-      else                        /* next nearest is row below */
+      else                             /* next nearest is row below */
         inptr1 = input_data[inrow+1];
       outptr = output_data[outrow++];
 
@@ -412,7 +412,7 @@ jinit_upsampler (j_decompress_ptr cinfo)
   upsample->pub.upsample = sep_upsample;
   upsample->pub.need_context_rows = FALSE; /* until we find out differently */
 
-  if (cinfo->CCIR601_sampling)    /* this isn't supported */
+  if (cinfo->CCIR601_sampling)         /* this isn't supported */
     ERREXIT(cinfo, JERR_CCIR601_NOTIMPL);
 
   /* jdmainct.c doesn't support context rows when min_DCT_scaled_size = 1,

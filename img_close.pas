@@ -11,7 +11,7 @@
 }
 module img_close;
 define img_close;
-%include '/cognivision_links/dsee_libs/img/img2.ins.pas';
+%include 'img2.ins.pas';
 
 procedure img_close (                  {close an image file}
   in out  img: img_conn_t;             {handle to open image file or connection}

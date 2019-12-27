@@ -4,7 +4,7 @@
 }
 module img_driver_inf;
 define img_d_inf_open_read;
-%include '/cognivision_links/dsee_libs/img/img2.ins.pas';
+%include 'img2.ins.pas';
 {
 *******************************************************************
 *******************************************************************
