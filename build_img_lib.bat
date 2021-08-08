@@ -38,6 +38,7 @@ call src_pas %srcdir% %libname%_open_read_filt %1
 call src_pas %srcdir% %libname%_open_read_img %1
 call src_pas %srcdir% %libname%_open_write_img %1
 call src_pas %srcdir% %libname%_parms %1
+call src_pas %srcdir% %libname%_path %1
 call src_pas %srcdir% %libname%_read_scan1 %1
 call src_pas %srcdir% %libname%_read_scan1_scan2 %1
 call src_pas %srcdir% %libname%_read_scan2 %1

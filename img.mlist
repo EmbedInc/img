@@ -21,6 +21,7 @@ img_open_read_filt.obj
 img_open_read_img.obj
 img_open_write_img.obj
 img_parms.obj
+img_path.obj
 img_read_scan1.obj
 img_read_scan1_scan2.obj
 img_read_scan2.obj

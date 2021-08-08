@@ -221,6 +221,12 @@ procedure img_open_write_img (         {open an image file for write}
   out     stat: sys_err_t);            {completion status code}
   val_param; extern;
 
+function img_path_f_gnam (             {get pathname from generic name of img to read}
+  in      gnam: univ string_var_arg_t; {input generic image name}
+  in out  path: univ string_var_arg_t) {output name with suffix of file that exists}
+  :boolean;                            {an image file was found}
+  val_param; extern;
+
 procedure img_read_scan1 (             {read next scan line as format 1 pixels}
   in out  img: img_conn_t;             {handle to this image data stream}
   out     scan: univ img_scan1_arg_t;  {returned scan line of pixels}
