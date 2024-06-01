@@ -9,9 +9,6 @@ call src_get %srcdir% %libname%2.ins.pas
 call src_get %srcdir% %libname%_sys.ins.pas
 call src_get %srcdir% tiff.ins.pas
 
-call src_getfrom sys sys.ins.pas
-call src_getfrom util util.ins.pas
-call src_getfrom string string.ins.pas
-call src_getfrom file file.ins.pas
+call src_getbase
 
 call src_builddate "%srcdir%"
